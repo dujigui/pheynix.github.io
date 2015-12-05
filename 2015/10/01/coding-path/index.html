@@ -3,17 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Pheynix的脚印</title>
+  <title>编程之路 | Pheynix的脚印</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="My personal blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Pheynix的脚印">
-<meta property="og:url" content="http://pheynix.github.io/index.html">
+  <meta name="description" content="从7月21开始投简历找工作，面试了sugr/glassx/avatar/趣创/迅雷看看/小象快跑/beva/plusmoney等等，还有误进几个黑心的培训机构！见过各种奇葩的公司，各种装逼的，办公室还在装修的！最后在福田找到了现在工作的plusmoney，终于实现了转行的梦想，顺带着也把在CBD上班的(很久之前的)愿望也实现了。面试plusmoney的时间是9月8号，然后9号就开始签合同上班了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编程之路">
+<meta property="og:url" content="http://pheynix.github.io/2015/10/01/coding-path/index.html">
 <meta property="og:site_name" content="Pheynix的脚印">
-<meta property="og:description" content="My personal blog">
+<meta property="og:description" content="从7月21开始投简历找工作，面试了sugr/glassx/avatar/趣创/迅雷看看/小象快跑/beva/plusmoney等等，还有误进几个黑心的培训机构！见过各种奇葩的公司，各种装逼的，办公室还在装修的！最后在福田找到了现在工作的plusmoney，终于实现了转行的梦想，顺带着也把在CBD上班的(很久之前的)愿望也实现了。面试plusmoney的时间是9月8号，然后9号就开始签合同上班了。">
+<meta property="og:image" content="https://unsplash.com/photos/g3Vtkfx5bQg">
+<meta property="og:updated_time" content="2015-12-05T19:07:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Pheynix的脚印">
-<meta name="twitter:description" content="My personal blog">
+<meta name="twitter:title" content="编程之路">
+<meta name="twitter:description" content="从7月21开始投简历找工作，面试了sugr/glassx/avatar/趣创/迅雷看看/小象快跑/beva/plusmoney等等，还有误进几个黑心的培训机构！见过各种奇葩的公司，各种装逼的，办公室还在装修的！最后在福田找到了现在工作的plusmoney，终于实现了转行的梦想，顺带着也把在CBD上班的(很久之前的)愿望也实现了。面试plusmoney的时间是9月8号，然后9号就开始签合同上班了。">
   
   
     <link rel="icon" href="favicon.png">
@@ -123,8 +125,7 @@
 </aside>
 
       
-      <section id="main">
-      <article id="post-deploy-hexo" class="article article-type-post" itemscope itemprop="blogPost">
+      <section id="main"><article id="post-coding-path" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -132,93 +133,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/06/deploy-hexo/">使用Hexo部署博客</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/12/06/deploy-hexo/">
-      <time datetime="2015-12-05T17:52:30.000Z" itemprop="datePublished">2015-12-06</time>
-    </a>
-  </div>
-
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="https://images.unsplash.com/photo-1445964047600-cdbdb873673d?crop=entropy&amp;dpr=2&amp;fit=crop&amp;fm=jpg&amp;h=800&amp;ixjsv=2.1.0&amp;ixlib=rb-0.3.5&amp;q=50&amp;w=1450" alt="autumn_leaf_path"></p>
-<p><a href="hexo.io">hexo</a>是一个静态博客框架，可以使用MarkDown写作然后方便地生成静态博客，<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">部署的方式</a>在官方其实已经很详细，网上也有很有详细的教程，这里主要记录一下部署过程遇到的坑。</p>
-<h4 id="1_Error:_Deployer_not_found_:_git">1 Error: Deployer not found : git</h4><p>执行<code>$ hexo deploy</code> 遇到<code>Error: Deployer not found : git</code>的错误，原因是没有安装deployer插件。</p>
-<p>先执行<code>rm -rf .deploy_git</code>移除该插件现有的安装，然后<code>npm install hexo-deployer-git --save</code>安装插件。</p>
-<p>记得修改<code>_config.yml</code>文件的<code>deploy:</code>部分为：</p>
-<pre>
-deploy:
-  type: git
-  message: [message]
-  repo: 
-    github: <repository url="">,[branch]
-    gitcafe: <repository url="">,[branch]
-</repository></repository></pre>
-
-
-<h4 id="2_MODULE_NOT_FOUND">2 MODULE_NOT_FOUND</h4><p>执行<code>$ hexo generate</code>时出现的错误</p>
-<pre>
-{ [Error: Cannot find module './build/Release/DTraceProviderBindings'] code: 'MODULE_NOT_FOUND' }
-{ [Error: Cannot find module './build/default/DTraceProviderBindings'] code: 'MODULE_NOT_FOUND' }
-{ [Error: Cannot find module './build/Debug/DTraceProviderBindings'] code: 'MODULE_NOT_FOUND' }
-</pre>
-使用`npm install hexo --no-optional`更新Hexo解决
-
-
-#### 3 部署到github后无法加载css和js
-
-路径错误，在`_config.yml`中
-<pre>
-url: http://pheynix.github.io
-root: /hexo-theme-icarus/
-permalink: :year/:month/:day/:title/
-permalink_defaults:
-</pre>
-
-<p>将<code>root: /hexo-theme-icarus/</code>改成<code>/</code>后加载正常。这个博客使用的是<a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="external">hexo-theme-icarus</a>，修改后本地使用<code>$ hexo server</code>启动本地服务器<code>0.0.0.0:4000</code>无法连接，问题未解决，只能在启动本地服务器之前将<code>root</code>还原….</p>
-<p>虽然不少坑，但是也不错啦，有个博客，可以记录一下了。之前写的东西比较水，就不放在新的博客了。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://pheynix.github.io/2015/12/06/deploy-hexo/" data-id="cihth2nkt0006zmgmo9rey409" class="article-share-link">Share</a>
-      
-        <a href="http://pheynix.github.io/2015/12/06/deploy-hexo/#ds-thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/footprint/">footprint</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-coding-path" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/01/coding-path/">编程之路</a>
+    <h1 class="article-title" itemprop="name">
+      编程之路
     </h1>
   
 
@@ -276,11 +192,33 @@ permalink_defaults:
     </footer>
   </div>
   
+    
+<nav id="article-nav">
+  
+    <a href="/2015/12/06/deploy-hexo/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          使用Hexo部署博客
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+
+  
 </article>
 
 
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="http://pheynix.github.io/2015/10/01/coding-path/" data-title="编程之路" data-url="http://pheynix.github.io/2015/10/01/coding-path/">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by DuoShuo.</a></noscript>
+      </div>
+  </section>
 
-    </section>
+</section>
       
         <aside id="sidebar">
   
