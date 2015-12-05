@@ -101,7 +101,7 @@
         <span>post</span>
       </div>
       <div class="article-info-block">
-        0
+        1
         <span>tag</span>
       </div>
     </div>
@@ -154,9 +154,10 @@
     <div class="article-entry" itemprop="articleBody">
       
                 
-        <p><img src="https://images.unsplash.com/photo-1445964047600-cdbdb873673d?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;s=c6665e8c83154faddeb6b9d253871486" alt="重新部署"></p>
+        <a href="!--![重新部署](https://images.unsplash.com/photo-1445964047600-cdbdb873673d?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;s=c6665e8c83154faddeb6b9d253871486)--">!--![重新部署](https://images.unsplash.com/photo-1445964047600-cdbdb873673d?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;s=c6665e8c83154faddeb6b9d253871486)--</a>
+<p><img src="asset/pic_autumn_leaf" alt="重新部署"></p>
 <p><a href="hexo.io">hexo</a>是一个静态博客框架，可以使用MarkDown写作然后方便地生成静态博客，<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">部署的方式</a>在官方其实已经很详细，网上也有很有详细的教程，这里主要记录一下部署过程遇到的坑。</p>
-<h5 id="1_Error:_Deployer_not_found_:_git">1 Error: Deployer not found : git</h5><p>执行<code>$ hexo deploy</code> 遇到<code>Error: Deployer not found : git</code>的错误，原因是没有安装deployer插件。</p>
+<h4 id="1_Error:_Deployer_not_found_:_git">1 Error: Deployer not found : git</h4><p>执行<code>$ hexo deploy</code> 遇到<code>Error: Deployer not found : git</code>的错误，原因是没有安装deployer插件。</p>
 <p>先执行<code>rm -rf .deploy_git</code>移除该插件现有的安装，然后<code>npm install hexo-deployer-git --save</code>安装插件。</p>
 <p>记得修改<code>_config.yml</code>文件的<code>deploy:</code>部分为：</p>
 <pre>
@@ -169,7 +170,7 @@ deploy:
 </repository></repository></pre>
 
 
-<h5 id="2_MODULE_NOT_FOUND">2 MODULE_NOT_FOUND</h5><p>执行<code>$ hexo generate</code>时出现的错误</p>
+<h4 id="2_MODULE_NOT_FOUND">2 MODULE_NOT_FOUND</h4><p>执行<code>$ hexo generate</code>时出现的错误</p>
 <pre>
 { [Error: Cannot find module './build/Release/DTraceProviderBindings'] code: 'MODULE_NOT_FOUND' }
 { [Error: Cannot find module './build/default/DTraceProviderBindings'] code: 'MODULE_NOT_FOUND' }
@@ -178,7 +179,7 @@ deploy:
 使用`npm install hexo --no-optional`更新Hexo解决
 
 
-##### 3 部署到github后无法加载css和js
+#### 3 部署到github后无法加载css和js
 
 路径错误，在`_config.yml`中
 <pre>
@@ -194,11 +195,13 @@ permalink_defaults:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://pheynix.github.io/2015/12/06/deploy-hexo/" data-id="cihtfnawu0000r7gmuum1vh7u" class="article-share-link">Share</a>
+      <a data-url="http://pheynix.github.io/2015/12/06/deploy-hexo/" data-id="cihtgamvr0000ucgmfduh5v3y" class="article-share-link">Share</a>
       
         <a href="http://pheynix.github.io/2015/12/06/deploy-hexo/#ds-thread" class="article-comment-link">Comments</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/footprint/">footprint</a></li></ul>
+
     </footer>
   </div>
   
@@ -221,7 +224,7 @@ permalink_defaults:
             <div class="item-thumbnail">
               <a href="/2015/12/06/deploy-hexo/" class="thumbnail">
   
-    <span style="background-image:url(https://images.unsplash.com/photo-1445964047600-cdbdb873673d?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;s=c6665e8c83154faddeb6b9d253871486
+    <span style="background-image:url(/asset/pic_autumn_leaf
 )" alt="使用Hexo部署博客" class="thumbnail-image"></span>
   
 </a>
@@ -242,8 +245,22 @@ permalink_defaults:
     
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/footprint/">footprint</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">tag cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/footprint/" style="font-size: 10px;">footprint</a>
+    </div>
+  </div>
+
   
     
   <div class="widget-wrap">
