@@ -170,28 +170,7 @@ deploy:
 
 
 <h4 id="2_MODULE_NOT_FOUND">2 MODULE_NOT_FOUND</h4><p>执行<code>$ hexo generate</code>时出现的错误</p>
-<pre>
-{ [Error: Cannot find module './build/Release/DTraceProviderBindings'] code: 'MODULE_NOT_FOUND' }
-{ [Error: Cannot find module './build/default/DTraceProviderBindings'] code: 'MODULE_NOT_FOUND' }
-{ [Error: Cannot find module './build/Debug/DTraceProviderBindings'] code: 'MODULE_NOT_FOUND' }
-</pre>
-使用`npm install hexo --no-optional`更新Hexo解决
-
-
-----
-
-
-#### 3 部署到github后无法加载css和js
-
-路径错误，在`_config.yml`中
-<pre>
-url: http://pheynix.github.io
-root: /hexo-theme-icarus/
-permalink: :year/:month/:day/:title/
-permalink_defaults:
-</pre>
-
-<p>将<code>root: /hexo-theme-icarus/</code>改成<code>/</code>后加载正常。这个博客使用的是<a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="external">hexo-theme-icarus</a>，修改后本地使用<code>$ hexo server</code>启动本地服务器<code>0.0.0.0:4000</code>无法连接，问题未解决，只能在启动本地服务器之前将<code>root</code>还原….</p>
+<p><pre><br>{ [Error: Cannot find module ‘./build/Release/DTraceProviderBindings’] code: ‘MODULE_NOT_FOUND’ }<br>{ [Error: Cannot find module ‘./build/default/DTraceProviderBindings’] code: ‘MODULE_NOT_FOUND’ }<br>{ [Error: Cannot find module ‘./build/Debug/DTraceProviderBindings’] code: ‘MODULE_NOT_FOUND’ }<br></pre><br>使用<code>npm install hexo --no-optional</code>更新Hexo解决</p>
 <p>虽然不少坑，但是也不错啦，有个博客，可以记录一下了。之前写的东西比较水，就不放在新的博客了。</p>
 
       
