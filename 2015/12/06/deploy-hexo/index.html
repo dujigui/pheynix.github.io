@@ -16,7 +16,7 @@
 1 Error: Deployer not found : git执行$ hexo deploy 遇到Error: Deployer not found : git的错误，原因是没有安装deployer插件。
 先执行rm -rf">
 <meta property="og:image" content="https://images.unsplash.com/photo-1445964047600-cdbdb873673d?crop=entropy&dpr=2&fit=crop&fm=jpg&h=800&ixjsv=2.1.0&ixlib=rb-0.3.5&q=50&w=1450">
-<meta property="og:updated_time" content="2015-12-06T07:34:55.000Z">
+<meta property="og:updated_time" content="2015-12-06T07:38:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用Hexo部署博客">
 <meta name="twitter:description" content="hexo是一个静态博客框架，可以使用MarkDown写作然后方便地生成静态博客，部署的方式在官方其实已经很详细，网上也有很有详细的教程，这里主要记录一下部署过程遇到的坑。
@@ -165,18 +165,11 @@
 <p><a href="hexo.io">hexo</a>是一个静态博客框架，可以使用MarkDown写作然后方便地生成静态博客，<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">部署的方式</a>在官方其实已经很详细，网上也有很有详细的教程，这里主要记录一下部署过程遇到的坑。</p>
 <h4 id="1_Error:_Deployer_not_found_:_git">1 Error: Deployer not found : git</h4><p>执行<code>$ hexo deploy</code> 遇到<code>Error: Deployer not found : git</code>的错误，原因是没有安装deployer插件。</p>
 <p>先执行<code>rm -rf .deploy_git</code>移除该插件现有的安装，然后<code>npm install hexo-deployer-git --save</code>安装插件。</p>
-<p>记得修改<code>_config.yml</code>文件的<code>deploy:</code>部分为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deploy:&#10;  type: git&#10;  message: [message]&#10;  repo: &#10;    github: repository_url,[branch]&#10;    gitcafe: repository_url,[branch]</span><br></pre></td></tr></table></figure></p>
-<h4 id="2_部署到github后无法加载css和js">2 部署到github后无法加载css和js</h4><p>路径错误，在<code>_config.yml</code>中</p>
-<pre>
-url: http://pheynix.github.io
-root: /hexo-theme-icarus/
-permalink: :year/:month/:day/:title/
-permalink_defaults:
-</pre>
-
+<p>记得修改<code>_config.yml</code>文件的<code>deploy:</code>部分为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deploy:&#10;  type: git&#10;  message: [message]&#10;  repo: &#10;    github: &#60;repository_url&#62;,[branch]&#10;    gitcafe: &#60;repository_url&#62;,[branch]</span><br></pre></td></tr></table></figure></p>
+<h4 id="2_部署到github后无法加载css和js">2 部署到github后无法加载css和js</h4><p>路径错误，在<code>_config.yml</code>中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url: http://pheynix.github.io&#10;root: /hexo-theme-icarus/&#10;permalink: :year/:month/:day/:title/&#10;permalink_defaults:</span><br></pre></td></tr></table></figure></p>
 <p>将<code>root: /hexo-theme-icarus/</code>改成<code>/</code>后加载正常。这个博客使用的是<a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="external">hexo-theme-icarus</a>，修改后本地使用<code>$ hexo server</code>启动本地服务器<code>0.0.0.0:4000</code>无法连接，问题未解决，只能在启动本地服务器之前将<code>root</code>还原….</p>
-<h4 id="3_MODULE_NOT_FOUND">3 MODULE_NOT_FOUND</h4><p>执行<code>$ hexo generate</code>时出现的错误</p>
-<p><pre><br>{ [Error: Cannot find module ‘./build/Release/DTraceProviderBindings’] code: ‘MODULE_NOT_FOUND’ }<br>{ [Error: Cannot find module ‘./build/default/DTraceProviderBindings’] code: ‘MODULE_NOT_FOUND’ }<br>{ [Error: Cannot find module ‘./build/Debug/DTraceProviderBindings’] code: ‘MODULE_NOT_FOUND’ }<br></pre><br>使用<code>npm install hexo --no-optional</code>更新Hexo解决</p>
+<h4 id="3_MODULE_NOT_FOUND">3 MODULE_NOT_FOUND</h4><p>执行<code>$ hexo generate</code>时出现的错误<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; [Error: Cannot find module &#39;./build/Release/DTraceProviderBindings&#39;] code: &#39;MODULE_NOT_FOUND&#39; &#125;&#10;&#123; [Error: Cannot find module &#39;./build/default/DTraceProviderBindings&#39;] code: &#39;MODULE_NOT_FOUND&#39; &#125;&#10;&#123; [Error: Cannot find module &#39;./build/Debug/DTraceProviderBindings&#39;] code: &#39;MODULE_NOT_FOUND&#39; &#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用<code>npm install hexo --no-optional</code>更新Hexo解决</p>
 <p>虽然不少坑，但是也不错啦，有个博客，可以记录一下了。之前写的东西比较水，就不放在新的博客了。</p>
 
       
