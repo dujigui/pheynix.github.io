@@ -16,7 +16,7 @@
 1 Error: Deployer not found : git执行$ hexo deploy 遇到Error: Deployer not found : git的错误，原因是没有安装deployer插件。
 先执行rm -rf">
 <meta property="og:image" content="https://images.unsplash.com/photo-1445964047600-cdbdb873673d?crop=entropy&dpr=2&fit=crop&fm=jpg&h=800&ixjsv=2.1.0&ixlib=rb-0.3.5&q=50&w=1450">
-<meta property="og:updated_time" content="2015-12-06T07:27:54.000Z">
+<meta property="og:updated_time" content="2015-12-06T07:28:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用Hexo部署博客">
 <meta name="twitter:description" content="hexo是一个静态博客框架，可以使用MarkDown写作然后方便地生成静态博客，部署的方式在官方其实已经很详细，网上也有很有详细的教程，这里主要记录一下部署过程遇到的坑。
@@ -177,7 +177,7 @@ deploy:
 
 
 
-<h4 id="3_部署到github后无法加载css和js">3 部署到github后无法加载css和js</h4><p>路径错误，在<code>_config.yml</code>中</p>
+<h4 id="2_部署到github后无法加载css和js">2 部署到github后无法加载css和js</h4><p>路径错误，在<code>_config.yml</code>中</p>
 <pre>
 url: http://pheynix.github.io
 root: /hexo-theme-icarus/
@@ -186,7 +186,7 @@ permalink_defaults:
 </pre>
 
 <p>将<code>root: /hexo-theme-icarus/</code>改成<code>/</code>后加载正常。这个博客使用的是<a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="external">hexo-theme-icarus</a>，修改后本地使用<code>$ hexo server</code>启动本地服务器<code>0.0.0.0:4000</code>无法连接，问题未解决，只能在启动本地服务器之前将<code>root</code>还原….</p>
-<h4 id="2_MODULE_NOT_FOUND">2 MODULE_NOT_FOUND</h4><p>执行<code>$ hexo generate</code>时出现的错误</p>
+<h4 id="3_MODULE_NOT_FOUND">3 MODULE_NOT_FOUND</h4><p>执行<code>$ hexo generate</code>时出现的错误</p>
 <p><pre><br>{ [Error: Cannot find module ‘./build/Release/DTraceProviderBindings’] code: ‘MODULE_NOT_FOUND’ }<br>{ [Error: Cannot find module ‘./build/default/DTraceProviderBindings’] code: ‘MODULE_NOT_FOUND’ }<br>{ [Error: Cannot find module ‘./build/Debug/DTraceProviderBindings’] code: ‘MODULE_NOT_FOUND’ }<br></pre><br>使用<code>npm install hexo --no-optional</code>更新Hexo解决</p>
 <p>虽然不少坑，但是也不错啦，有个博客，可以记录一下了。之前写的东西比较水，就不放在新的博客了。</p>
 
