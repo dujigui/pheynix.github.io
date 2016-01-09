@@ -3,36 +3,30 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Categories | Pheynix&#39;s footprint</title>
+  <title>JiandanRxJava阅读收获 | Pheynix&#39;s footprint</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="(这里是目录)
+  <meta name="description" content="如果需要防止外部实例化一个类，可以将构造函数设置为private，并且抛出异常
+1private MenuAdapter()&amp;#123;&amp;#10;    throw new UnsupportedOperationException();&amp;#10;&amp;#125;
 
-Android
-git
-Terminal
-shortcut
-footprint">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Categories">
-<meta property="og:url" content="http://pheynix.github.io/categories/index.html">
+校验参数发现错误时抛出IllegalArgumentException，及早发现问题
+1public MenuAdapter(Objec">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JiandanRxJava阅读收获">
+<meta property="og:url" content="http://pheynix.github.io/2015/12/07/jiandan-rxjava/index.html">
 <meta property="og:site_name" content="Pheynix's footprint">
-<meta property="og:description" content="(这里是目录)
+<meta property="og:description" content="如果需要防止外部实例化一个类，可以将构造函数设置为private，并且抛出异常
+1private MenuAdapter()&amp;#123;&amp;#10;    throw new UnsupportedOperationException();&amp;#10;&amp;#125;
 
-Android
-git
-Terminal
-shortcut
-footprint">
-<meta property="og:updated_time" content="2015-12-06T08:14:46.000Z">
+校验参数发现错误时抛出IllegalArgumentException，及早发现问题
+1public MenuAdapter(Objec">
+<meta property="og:updated_time" content="2016-01-09T03:39:33.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Categories">
-<meta name="twitter:description" content="(这里是目录)
+<meta name="twitter:title" content="JiandanRxJava阅读收获">
+<meta name="twitter:description" content="如果需要防止外部实例化一个类，可以将构造函数设置为private，并且抛出异常
+1private MenuAdapter()&amp;#123;&amp;#10;    throw new UnsupportedOperationException();&amp;#10;&amp;#125;
 
-Android
-git
-Terminal
-shortcut
-footprint">
+校验参数发现错误时抛出IllegalArgumentException，及早发现问题
+1public MenuAdapter(Objec">
   
   
     <link rel="icon" href="favicon.png">
@@ -142,14 +136,114 @@ footprint">
 </aside>
 
       
-      <section id="main"><section class="layout-wrap">
-  <div class="layout-title">
-    <span>Categories</span>
-  </div>
-  <div class="layout-wrap-inner list-categories">
+      <section id="main"><article id="post-jiandan-rxjava" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      
+	
+		<img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/jiandan_rxjava/house.jpeg" class="article-banner">
+	
+
+
+
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JiandanRxJava阅读收获
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/12/07/jiandan-rxjava/">
+      <time datetime="2015-12-07T14:09:24.000Z" itemprop="datePublished">2015-12-07</time>
+    </a>
   </div>
-</section></section>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <ul>
+<li><p>如果需要防止外部实例化一个类，可以将构造函数设置为private，并且抛出异常</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private MenuAdapter()&#123;&#10;    throw new UnsupportedOperationException();&#10;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>校验参数发现错误时抛出IllegalArgumentException，及早发现问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public MenuAdapter(Object object)&#123;&#10;    if(object == null)&#123;&#10;        throw new IllegalArgumentException();&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用JUnit等测试工具</p>
+</li>
+</ul>
+<ul>
+<li>如果需要在外部调用Activity内部的方法，最好的方法是，定义一个接口，外部调用这个接口，保证解耦合<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public interface someInterface &#123;&#10;    void doSomething();&#10;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public MainActivity extends BaseActivity implements someInterface&#123;&#10;    void doSomething()&#123;&#10;     ...&#10;    &#125;&#10;&#10;    someObject.setListener(this);&#10;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public SomeObject &#123;&#10;    someListener.doSomething();&#10;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>在Application的onCreate中做一些的初始化的工作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class JDApplication extends Application&#123;&#10;    @Override&#10;    public void onCreate() &#123;&#10;        super.onCreate();&#10;        doSomething();&#10;        doOther();&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用PreferenceFragment搭建Setting页</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class SettingFragment extends PreferenceFragment &#123;&#10;    @Override&#10;    public void onCreate(Bundle savedInstanceState) &#123;&#10;        super.onCreate(savedInstanceState);&#10;        addPreferencesFromResource(R.xml.preferences);&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://pheynix.github.io/2015/12/07/jiandan-rxjava/" data-id="cij6kd07f000g4fgmrpsl9ihu" class="article-share-link">Share</a>
+      
+        <a href="http://pheynix.github.io/2015/12/07/jiandan-rxjava/#ds-thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Exception/">Exception</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JUnit/">JUnit</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RxJava/">RxJava</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reading/">reading</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/12/07/zhihu-daily-purify/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          ZhihuDailyPurify阅读收获
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/12/06/deploy-hexo/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">使用Hexo部署博客</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="http://pheynix.github.io/2015/12/07/jiandan-rxjava/" data-title="JiandanRxJava阅读收获" data-url="http://pheynix.github.io/2015/12/07/jiandan-rxjava/">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by DuoShuo.</a></noscript>
+      </div>
+  </section>
+
+</section>
       
         <aside id="sidebar">
   
