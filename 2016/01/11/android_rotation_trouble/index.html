@@ -3,18 +3,20 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tags | Pheynix&#39;s footprint</title>
+  <title>Pheynix&#39;s footprint</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="My personal blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Tags">
-<meta property="og:url" content="http://pheynix.github.io/tags/index.html">
+  <meta name="description" content="Android旋转动画闪烁问题问题项目需要实现点击按钮后旋转按钮的需求在res/anim中新建anim_close.xml1&amp;#60;rotate&amp;#10;    xmlns:android=&amp;#34;http://schemas.android.com/apk/res/android&amp;#34;&amp;#10;    android:duration=&amp;#34;1000&amp;#34;&amp;#10;    and">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pheynix's footprint">
+<meta property="og:url" content="http://pheynix.github.io/2016/01/11/android_rotation_trouble/index.html">
 <meta property="og:site_name" content="Pheynix's footprint">
-<meta property="og:description" content="My personal blog">
-<meta property="og:updated_time" content="2015-12-05T12:11:45.000Z">
+<meta property="og:description" content="Android旋转动画闪烁问题问题项目需要实现点击按钮后旋转按钮的需求在res/anim中新建anim_close.xml1&amp;#60;rotate&amp;#10;    xmlns:android=&amp;#34;http://schemas.android.com/apk/res/android&amp;#34;&amp;#10;    android:duration=&amp;#34;1000&amp;#34;&amp;#10;    and">
+<meta property="og:image" content="http://pheynix.github.io/...">
+<meta property="og:image" content="http://pheynix.github.io/...">
+<meta property="og:updated_time" content="2016-01-11T12:40:32.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Tags">
-<meta name="twitter:description" content="My personal blog">
+<meta name="twitter:title" content="Pheynix's footprint">
+<meta name="twitter:description" content="Android旋转动画闪烁问题问题项目需要实现点击按钮后旋转按钮的需求在res/anim中新建anim_close.xml1&amp;#60;rotate&amp;#10;    xmlns:android=&amp;#34;http://schemas.android.com/apk/res/android&amp;#34;&amp;#10;    android:duration=&amp;#34;1000&amp;#34;&amp;#10;    and">
   
   
     <link rel="icon" href="favicon.png">
@@ -124,16 +126,104 @@
 </aside>
 
       
-      <section id="main"><section class="layout-wrap">
-  <div class="layout-title">
-    <span>Tags</span>
-  </div>
-  <div class="layout-wrap-inner tag-cloud">
+      <section id="main"><article id="post-android_rotation_trouble" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-      <a href="/tags/Exception/" style="font-size: 14px;">Exception</a> <a href="/tags/JUnit/" style="font-size: 14px;">JUnit</a> <a href="/tags/RxJava/" style="font-size: 14px;">RxJava</a> <a href="/tags/android/" style="font-size: 28px;">android</a> <a href="/tags/footprint/" style="font-size: 14px;">footprint</a> <a href="/tags/note/" style="font-size: 14px;">note</a> <a href="/tags/original/" style="font-size: 14px;">original</a> <a href="/tags/reading/" style="font-size: 28px;">reading</a> <a href="/tags/trouble/" style="font-size: 14px;">trouble</a>
     
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <h1 id="Android旋转动画闪烁问题">Android旋转动画闪烁问题</h1><h4 id="问题">问题</h4><p>项目需要实现点击按钮后旋转按钮的需求<br>在res/anim中新建anim_close.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;rotate&#10;    xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;&#10;    android:duration=&#34;1000&#34;&#10;    android:interpolator=&#34;@android:interpolator/overshoot&#34;&#10;    android:fromDegrees=&#34;0&#34;&#10;    android:pivotX=&#34;50%&#34;&#10;    android:pivotY=&#34;50%&#34;&#10;    android:startOffset=&#34;0&#34;&#10;    android:toDegrees=&#34;45&#34;/&#62;</span><br></pre></td></tr></table></figure></p>
+<p>和anim_open.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&#62;&#10;&#60;rotate&#10;    xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;&#10;    android:duration=&#34;500&#34;&#10;    android:fromDegrees=&#34;0&#34;&#10;    android:interpolator=&#34;@android:interpolator/overshoot&#34;&#10;    android:pivotX=&#34;50%&#34;&#10;    android:pivotY=&#34;50%&#34;&#10;    android:startOffset=&#34;0&#34;&#10;    android:toDegrees=&#34;-45&#34;/&#62;</span><br></pre></td></tr></table></figure></p>
+<p>其中</p>
+<ul>
+<li><code>fromDegrees</code>表示动画开始时候的角度</li>
+<li><code>toDegrees</code>表示动画结束时候的角度</li>
+<li>上述角度叠加在ImageView的<code>android:rotation</code>之上；例如当前rotation是45°，fromDegrees是45°，那么动画从90°的位置开始播放。</li>
+<li><strong>动画结束后恢复原样</strong></li>
+</ul>
+<p>开始的时候打算在**动画结束后修改调用<code>ivShortcut.setRotation(45)</code>旋转ImageView。但是由于动画结束首先恢复原样(0°)，然后才修改旋转角度，会造称闪烁。</p>
+<p><img src="..." alt="闪烁的gif"></p>
+<h4 id="解决方案">解决方案</h4><p>先修改ImageView的角度为最终角度，然后启动动画，动画的<code>fromDegrees</code>值和<code>toDegrees</code>改为相应的值。</p>
+<table>
+<thead>
+<tr>
+<th>status</th>
+<th style="text-align:center">fromDegrees</th>
+<th style="text-align:right">toDegrees</th>
+<th style="text-align:right">rotation</th>
+<th style="text-align:right">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>打开－原</td>
+<td style="text-align:center">0</td>
+<td style="text-align:right">45</td>
+<td style="text-align:right">45</td>
+<td style="text-align:right">动画从0转到45，然后将ImageView的rotation设置为45</td>
+</tr>
+<tr>
+<td>打开－新</td>
+<td style="text-align:center">－45</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">45</td>
+<td style="text-align:right">将ImageView的rotation设置为45，然后动画从相对当前位置的-45转到0</td>
+</tr>
+<tr>
+<td>关闭－原</td>
+<td style="text-align:center">0</td>
+<td style="text-align:right">－45</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">动画从0转到－45，然后将ImageView的rotation设置为0</td>
+</tr>
+<tr>
+<td>关闭－新</td>
+<td style="text-align:center">45</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">将ImageView的rotation设置为0，然后动画从相对当前位置的45转到0</td>
+</tr>
+</tbody>
+</table>
+<p>最终能够得到正确的效果</p>
+<p><img src="..." alt="闪烁的gif"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://pheynix.github.io/2016/01/11/android_rotation_trouble/" data-id="cij9yqzmc0000mbgmsyc9uv51" class="article-share-link">Share</a>
+      
+        <a href="http://pheynix.github.io/2016/01/11/android_rotation_trouble/#ds-thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
   </div>
-</section></section>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/01/07/jiandan_rxjava/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">JiandanRxJava阅读收获</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="http://pheynix.github.io/2016/01/11/android_rotation_trouble/" data-title="" data-url="http://pheynix.github.io/2016/01/11/android_rotation_trouble/">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by DuoShuo.</a></noscript>
+      </div>
+  </section>
+
+</section>
       
         <aside id="sidebar">
   

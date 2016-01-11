@@ -97,7 +97,7 @@
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
-        5
+        6
         <span>posts</span>
       </div>
       <div class="article-info-block">
@@ -124,12 +124,92 @@
 
       
       <section id="main">
-      <article id="post-jiandan-rxjava" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-android_rotation_trouble" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <h1 id="Android旋转动画闪烁问题">Android旋转动画闪烁问题</h1><h4 id="问题">问题</h4><p>项目需要实现点击按钮后旋转按钮的需求<br>在res/anim中新建anim_close.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;rotate&#10;    xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;&#10;    android:duration=&#34;1000&#34;&#10;    android:interpolator=&#34;@android:interpolator/overshoot&#34;&#10;    android:fromDegrees=&#34;0&#34;&#10;    android:pivotX=&#34;50%&#34;&#10;    android:pivotY=&#34;50%&#34;&#10;    android:startOffset=&#34;0&#34;&#10;    android:toDegrees=&#34;45&#34;/&#62;</span><br></pre></td></tr></table></figure></p>
+<p>和anim_open.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&#62;&#10;&#60;rotate&#10;    xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;&#10;    android:duration=&#34;500&#34;&#10;    android:fromDegrees=&#34;0&#34;&#10;    android:interpolator=&#34;@android:interpolator/overshoot&#34;&#10;    android:pivotX=&#34;50%&#34;&#10;    android:pivotY=&#34;50%&#34;&#10;    android:startOffset=&#34;0&#34;&#10;    android:toDegrees=&#34;-45&#34;/&#62;</span><br></pre></td></tr></table></figure></p>
+<p>其中</p>
+<ul>
+<li><code>fromDegrees</code>表示动画开始时候的角度</li>
+<li><code>toDegrees</code>表示动画结束时候的角度</li>
+<li>上述角度叠加在ImageView的<code>android:rotation</code>之上；例如当前rotation是45°，fromDegrees是45°，那么动画从90°的位置开始播放。</li>
+<li><strong>动画结束后恢复原样</strong></li>
+</ul>
+<p>开始的时候打算在**动画结束后修改调用<code>ivShortcut.setRotation(45)</code>旋转ImageView。但是由于动画结束首先恢复原样(0°)，然后才修改旋转角度，会造称闪烁。</p>
+<p><img src="..." alt="闪烁的gif"></p>
+<h4 id="解决方案">解决方案</h4><p>先修改ImageView的角度为最终角度，然后启动动画，动画的<code>fromDegrees</code>值和<code>toDegrees</code>改为相应的值。</p>
+<table>
+<thead>
+<tr>
+<th>status</th>
+<th style="text-align:center">fromDegrees</th>
+<th style="text-align:right">toDegrees</th>
+<th style="text-align:right">rotation</th>
+<th style="text-align:right">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>打开－原</td>
+<td style="text-align:center">0</td>
+<td style="text-align:right">45</td>
+<td style="text-align:right">45</td>
+<td style="text-align:right">动画从0转到45，然后将ImageView的rotation设置为45</td>
+</tr>
+<tr>
+<td>打开－新</td>
+<td style="text-align:center">－45</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">45</td>
+<td style="text-align:right">将ImageView的rotation设置为45，然后动画从相对当前位置的-45转到0</td>
+</tr>
+<tr>
+<td>关闭－原</td>
+<td style="text-align:center">0</td>
+<td style="text-align:right">－45</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">动画从0转到－45，然后将ImageView的rotation设置为0</td>
+</tr>
+<tr>
+<td>关闭－新</td>
+<td style="text-align:center">45</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">将ImageView的rotation设置为0，然后动画从相对当前位置的45转到0</td>
+</tr>
+</tbody>
+</table>
+<p>最终能够得到正确的效果</p>
+<p><img src="..." alt="闪烁的gif"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://pheynix.github.io/2016/01/11/android_rotation_trouble/" data-id="cij9yqzmc0000mbgmsyc9uv51" class="article-share-link">Share</a>
+      
+        <a href="http://pheynix.github.io/2016/01/11/android_rotation_trouble/#ds-thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-jiandan_rxjava" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       
 	
-		<a href="/2016/01/07/jiandan-rxjava/" itemprop="url"><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/jiandan_rxjava/house.jpg" class="article-banner"></a>
+		<a href="/2016/01/07/jiandan_rxjava/" itemprop="url"><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/jiandan_rxjava/house.jpg" class="article-banner"></a>
 	
 
 
@@ -141,7 +221,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/07/jiandan-rxjava/">JiandanRxJava阅读收获</a>
+      <a class="article-title" href="/2016/01/07/jiandan_rxjava/">JiandanRxJava阅读收获</a>
     </h1>
   
 
@@ -149,7 +229,7 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2016/01/07/jiandan-rxjava/">
+    <a href="/2016/01/07/jiandan_rxjava/">
       <time datetime="2016-01-07T14:09:24.000Z" itemprop="datePublished">2016-01-07</time>
     </a>
   </div>
@@ -190,9 +270,9 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://pheynix.github.io/2016/01/07/jiandan-rxjava/" data-id="cij6kd07f000g4fgmrpsl9ihu" class="article-share-link">Share</a>
+      <a data-url="http://pheynix.github.io/2016/01/07/jiandan_rxjava/" data-id="cij9yqzng0004mbgmeiekjx4g" class="article-share-link">Share</a>
       
-        <a href="http://pheynix.github.io/2016/01/07/jiandan-rxjava/#ds-thread" class="article-comment-link">Comments</a>
+        <a href="http://pheynix.github.io/2016/01/07/jiandan_rxjava/#ds-thread" class="article-comment-link">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Exception/">Exception</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JUnit/">JUnit</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RxJava/">RxJava</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reading/">reading</a></li></ul>
@@ -260,12 +340,12 @@
 
 
     
-      <article id="post-zhihu-daily-purify" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-zhihu_daily_purify" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       
 	
-		<a href="/2015/12/07/zhihu-daily-purify/" itemprop="url"><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/purify_zhihu/purify_banner.jpeg" class="article-banner"></a>
+		<a href="/2015/12/07/zhihu_daily_purify/" itemprop="url"><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/purify_zhihu/purify_banner.jpeg" class="article-banner"></a>
 	
 
 
@@ -277,7 +357,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/07/zhihu-daily-purify/">ZhihuDailyPurify阅读收获</a>
+      <a class="article-title" href="/2015/12/07/zhihu_daily_purify/">ZhihuDailyPurify阅读收获</a>
     </h1>
   
 
@@ -285,7 +365,7 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2015/12/07/zhihu-daily-purify/">
+    <a href="/2015/12/07/zhihu_daily_purify/">
       <time datetime="2015-12-07T14:09:24.000Z" itemprop="datePublished">2015-12-07</time>
     </a>
   </div>
@@ -315,9 +395,9 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://pheynix.github.io/2015/12/07/zhihu-daily-purify/" data-id="cij6kd07500064fgm8nyi0mg4" class="article-share-link">Share</a>
+      <a data-url="http://pheynix.github.io/2015/12/07/zhihu_daily_purify/" data-id="cij9yqzn90001mbgmfqmeuwok" class="article-share-link">Share</a>
       
-        <a href="http://pheynix.github.io/2015/12/07/zhihu-daily-purify/#ds-thread" class="article-comment-link">Comments</a>
+        <a href="http://pheynix.github.io/2015/12/07/zhihu_daily_purify/#ds-thread" class="article-comment-link">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reading/">reading</a></li></ul>
@@ -330,12 +410,12 @@
 
 
     
-      <article id="post-deploy-hexo" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-deploy_hexo" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       
 	
-		<a href="/2015/12/06/deploy-hexo/" itemprop="url"><img src="https://raw.githubusercontent.com/pheynix/pheynix.github.io/master/css/images/asset/deploy_hexo/pic_autumn_leaf.jpeg" class="article-banner"></a>
+		<a href="/2015/12/06/deploy_hexo/" itemprop="url"><img src="https://raw.githubusercontent.com/pheynix/pheynix.github.io/master/css/images/asset/deploy_hexo/pic_autumn_leaf.jpeg" class="article-banner"></a>
 	
 
 
@@ -347,7 +427,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/06/deploy-hexo/">使用Hexo部署博客</a>
+      <a class="article-title" href="/2015/12/06/deploy_hexo/">使用Hexo部署博客</a>
     </h1>
   
 
@@ -355,7 +435,7 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2015/12/06/deploy-hexo/">
+    <a href="/2015/12/06/deploy_hexo/">
       <time datetime="2015-12-05T17:52:30.000Z" itemprop="datePublished">2015-12-06</time>
     </a>
   </div>
@@ -381,9 +461,9 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://pheynix.github.io/2015/12/06/deploy-hexo/" data-id="cij6kd07j000p4fgm5eztv72z" class="article-share-link">Share</a>
+      <a data-url="http://pheynix.github.io/2015/12/06/deploy_hexo/" data-id="cij9yqzni000ambgm4getqa5t" class="article-share-link">Share</a>
       
-        <a href="http://pheynix.github.io/2015/12/06/deploy-hexo/#ds-thread" class="article-comment-link">Comments</a>
+        <a href="http://pheynix.github.io/2015/12/06/deploy_hexo/#ds-thread" class="article-comment-link">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/original/">original</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/trouble/">trouble</a></li></ul>
@@ -396,12 +476,12 @@
 
 
     
-      <article id="post-coding-path" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-coding_path" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       
 	
-		<a href="/2015/10/01/coding-path/" itemprop="url"><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/coding_path/climb.jpeg" class="article-banner"></a>
+		<a href="/2015/10/01/coding_path/" itemprop="url"><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/coding_path/climb.jpeg" class="article-banner"></a>
 	
 
 
@@ -413,7 +493,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/01/coding-path/">编程之路</a>
+      <a class="article-title" href="/2015/10/01/coding_path/">编程之路</a>
     </h1>
   
 
@@ -421,7 +501,7 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2015/10/01/coding-path/">
+    <a href="/2015/10/01/coding_path/">
       <time datetime="2015-09-30T19:00:43.000Z" itemprop="datePublished">2015-10-01</time>
     </a>
   </div>
@@ -460,9 +540,9 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://pheynix.github.io/2015/10/01/coding-path/" data-id="cij6kd05s00004fgm2onx1d62" class="article-share-link">Share</a>
+      <a data-url="http://pheynix.github.io/2015/10/01/coding_path/" data-id="cij9yqznk000dmbgmeua3wm3x" class="article-share-link">Share</a>
       
-        <a href="http://pheynix.github.io/2015/10/01/coding-path/#ds-thread" class="article-comment-link">Comments</a>
+        <a href="http://pheynix.github.io/2015/10/01/coding_path/#ds-thread" class="article-comment-link">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/footprint/">footprint</a></li></ul>
@@ -487,7 +567,25 @@
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2016/01/07/jiandan-rxjava/" class="thumbnail">
+              <a href="/2016/01/11/android_rotation_trouble/" class="thumbnail">
+  
+    <span style="background-image:url(/...
+)" alt="" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/01/11/android_rotation_trouble/" class="title"></a></p>
+              <p class="item-date"><time datetime="2016-01-11T12:40:32.000Z" itemprop="datePublished">2016-01-11</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/01/07/jiandan_rxjava/" class="thumbnail">
   
     <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/jiandan_rxjava/house.jpg)" alt="JiandanRxJava阅读收获" class="thumbnail-image"></span>
   
@@ -496,7 +594,7 @@
             
             <div class="item-inner">
               <p class="item-category"></p>
-              <p class="item-title"><a href="/2016/01/07/jiandan-rxjava/" class="title">JiandanRxJava阅读收获</a></p>
+              <p class="item-title"><a href="/2016/01/07/jiandan_rxjava/" class="title">JiandanRxJava阅读收获</a></p>
               <p class="item-date"><time datetime="2016-01-07T14:09:24.000Z" itemprop="datePublished">2016-01-07</time></p>
             </div>
           </li>
@@ -521,7 +619,7 @@
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2015/12/07/zhihu-daily-purify/" class="thumbnail">
+              <a href="/2015/12/07/zhihu_daily_purify/" class="thumbnail">
   
     <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/purify_zhihu/purify_banner.jpeg)" alt="ZhihuDailyPurify阅读收获" class="thumbnail-image"></span>
   
@@ -530,7 +628,7 @@
             
             <div class="item-inner">
               <p class="item-category"></p>
-              <p class="item-title"><a href="/2015/12/07/zhihu-daily-purify/" class="title">ZhihuDailyPurify阅读收获</a></p>
+              <p class="item-title"><a href="/2015/12/07/zhihu_daily_purify/" class="title">ZhihuDailyPurify阅读收获</a></p>
               <p class="item-date"><time datetime="2015-12-07T14:09:24.000Z" itemprop="datePublished">2015-12-07</time></p>
             </div>
           </li>
@@ -538,7 +636,7 @@
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2015/12/06/deploy-hexo/" class="thumbnail">
+              <a href="/2015/12/06/deploy_hexo/" class="thumbnail">
   
     <span style="background-image:url(https://raw.githubusercontent.com/pheynix/pheynix.github.io/master/css/images/asset/deploy_hexo/pic_autumn_leaf.jpeg)" alt="使用Hexo部署博客" class="thumbnail-image"></span>
   
@@ -547,25 +645,8 @@
             
             <div class="item-inner">
               <p class="item-category"></p>
-              <p class="item-title"><a href="/2015/12/06/deploy-hexo/" class="title">使用Hexo部署博客</a></p>
+              <p class="item-title"><a href="/2015/12/06/deploy_hexo/" class="title">使用Hexo部署博客</a></p>
               <p class="item-date"><time datetime="2015-12-05T17:52:30.000Z" itemprop="datePublished">2015-12-06</time></p>
-            </div>
-          </li>
-        
-          <li>
-            
-            <div class="item-thumbnail">
-              <a href="/2015/10/01/coding-path/" class="thumbnail">
-  
-    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/coding_path/climb.jpeg)" alt="编程之路" class="thumbnail-image"></span>
-  
-</a>
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category"></p>
-              <p class="item-title"><a href="/2015/10/01/coding-path/" class="title">编程之路</a></p>
-              <p class="item-date"><time datetime="2015-09-30T19:00:43.000Z" itemprop="datePublished">2015-10-01</time></p>
             </div>
           </li>
         
@@ -598,7 +679,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
