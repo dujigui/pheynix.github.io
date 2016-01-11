@@ -11,9 +11,8 @@
 <meta property="og:url" content="http://pheynix.github.io/2016/01/11/android_rotation_trouble/index.html">
 <meta property="og:site_name" content="Pheynix's footprint">
 <meta property="og:description" content="Android旋转动画闪烁问题问题项目需要实现点击按钮后旋转按钮的需求在res/anim中新建anim_close.xml1&amp;#60;rotate&amp;#10;    xmlns:android=&amp;#34;http://schemas.android.com/apk/res/android&amp;#34;&amp;#10;    android:duration=&amp;#34;1000&amp;#34;&amp;#10;    and">
-<meta property="og:image" content="http://pheynix.github.io/...">
-<meta property="og:image" content="http://pheynix.github.io/...">
-<meta property="og:updated_time" content="2016-01-11T12:40:32.000Z">
+<meta property="og:image" content="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/animation_trouble/animation_perfect.gif">
+<meta property="og:updated_time" content="2016-01-11T13:22:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Pheynix's footprint">
 <meta name="twitter:description" content="Android旋转动画闪烁问题问题项目需要实现点击按钮后旋转按钮的需求在res/anim中新建anim_close.xml1&amp;#60;rotate&amp;#10;    xmlns:android=&amp;#34;http://schemas.android.com/apk/res/android&amp;#34;&amp;#10;    android:duration=&amp;#34;1000&amp;#34;&amp;#10;    and">
@@ -143,8 +142,8 @@
 <li>上述角度叠加在ImageView的<code>android:rotation</code>之上；例如当前rotation是45°，fromDegrees是45°，那么动画从90°的位置开始播放。</li>
 <li><strong>动画结束后恢复原样</strong></li>
 </ul>
-<p>开始的时候打算在**动画结束后修改调用<code>ivShortcut.setRotation(45)</code>旋转ImageView。但是由于动画结束首先恢复原样(0°)，然后才修改旋转角度，会造称闪烁。</p>
-<p><img src="..." alt="闪烁的gif"></p>
+<p>开始的时候打算在**动画结束后修改调用<code>ivShortcut.setRotation(45)</code>旋转ImageView。但是由于动画结束首先恢复原样(0°)，然后才修改旋转角度，会造成闪烁的情况。</p>
+<p><a href="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/animation_trouble/animation_trouble.mov" target="_blank" rel="external">闪烁的屏幕录像</a></p>
 <h4 id="解决方案">解决方案</h4><p>先修改ImageView的角度为最终角度，然后启动动画，动画的<code>fromDegrees</code>值和<code>toDegrees</code>改为相应的值。</p>
 <table>
 <thead>
@@ -188,7 +187,7 @@
 </tbody>
 </table>
 <p>最终能够得到正确的效果</p>
-<p><img src="..." alt="闪烁的gif"></p>
+<p><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/animation_trouble/animation_perfect.gif" alt="正确的效果"></p>
 
       
     </div>
@@ -238,7 +237,7 @@
             <div class="item-thumbnail">
               <a href="/2016/01/11/android_rotation_trouble/" class="thumbnail">
   
-    <span style="background-image:url(/...
+    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/animation_trouble/animation_perfect.gif
 )" alt="" class="thumbnail-image"></span>
   
 </a>
@@ -247,7 +246,7 @@
             <div class="item-inner">
               <p class="item-category"></p>
               <p class="item-title"><a href="/2016/01/11/android_rotation_trouble/" class="title"></a></p>
-              <p class="item-date"><time datetime="2016-01-11T12:40:32.000Z" itemprop="datePublished">2016-01-11</time></p>
+              <p class="item-date"><time datetime="2016-01-11T13:23:14.000Z" itemprop="datePublished">2016-01-11</time></p>
             </div>
           </li>
         
