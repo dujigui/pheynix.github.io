@@ -175,8 +175,6 @@
 </ul>
 <p>开始的时候打算在**动画结束后修改调用<code>ivShortcut.setRotation(45)</code>旋转ImageView。但是由于动画结束首先恢复原样(0°)，然后才修改旋转角度，会造成闪烁的情况。</p>
 <p><a href="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/animation_trouble/animation_trouble.mov" target="_blank" rel="external">闪烁的屏幕录像</a></p>
-<iframe height="498" width="510" src="https://github.com/pheynix/pheynix.github.io/blob/master/css/images/raw/animation_trouble/animation_trouble.mov" frameborder="0" allowfullscreen></iframe>
-
 <h4 id="解决方案">解决方案</h4><p>先修改ImageView的角度为最终角度，然后启动动画，动画的<code>fromDegrees</code>值和<code>toDegrees</code>改为相应的值。</p>
 <table>
 <thead>
