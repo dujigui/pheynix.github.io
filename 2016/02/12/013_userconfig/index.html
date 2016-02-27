@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>利用UserConfig单例加快数据读取速度 | Pheynix&#39;s footprint</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在程序运行的过程中，经常要查询使用当前用户的相关信息，例如用户的权限等级、标示用户需要的Token、ID、名字等。这些信息一般来说保存在SharePreferences中。为了加快这些信息的读取速度，可以在APP启动的时候加载到UserConfig类中，作为静态变量，伴随着APP的生命周期。
+用法定义UserConfig类1public class UserConfig &amp;#123;&amp;#10;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用UserConfig单例加快数据读取速度">
+<meta property="og:url" content="http://pheynix.github.io/2016/02/12/013_userconfig/index.html">
+<meta property="og:site_name" content="Pheynix's footprint">
+<meta property="og:description" content="在程序运行的过程中，经常要查询使用当前用户的相关信息，例如用户的权限等级、标示用户需要的Token、ID、名字等。这些信息一般来说保存在SharePreferences中。为了加快这些信息的读取速度，可以在APP启动的时候加载到UserConfig类中，作为静态变量，伴随着APP的生命周期。
+用法定义UserConfig类1public class UserConfig &amp;#123;&amp;#10;">
+<meta property="og:updated_time" content="2016-02-27T14:02:03.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用UserConfig单例加快数据读取速度">
+<meta name="twitter:description" content="在程序运行的过程中，经常要查询使用当前用户的相关信息，例如用户的权限等级、标示用户需要的Token、ID、名字等。这些信息一般来说保存在SharePreferences中。为了加快这些信息的读取速度，可以在APP启动的时候加载到UserConfig类中，作为静态变量，伴随着APP的生命周期。
+用法定义UserConfig类1public class UserConfig &amp;#123;&amp;#10;">
+  
+  
+    <link rel="icon" href="favicon.png">
+  
+  
+ <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+ <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css" type="text/css">
+  
+
+  
+
+  
+</head>
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="/" id="logo"><span class="site-title">Pheynix&#39;s footprint</span></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/.">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/categories">Categories</a>
+        
+          <a class="main-nav-link" href="/tags">Tags</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="/css/images/my_avatar.png"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+      
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://pheynix.github.io"></form>
+      </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tr>
+        
+          <td><a class="main-nav-link" href="/.">Home</a></td>
+        
+          <td><a class="main-nav-link" href="/archives">Archives</a></td>
+        
+          <td><a class="main-nav-link" href="/categories">Categories</a></td>
+        
+          <td><a class="main-nav-link" href="/tags">Tags</a></td>
+        
+          <td><a class="main-nav-link" href="/about">About</a></td>
+        
+        <td>
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://pheynix.github.io"></form>
+        </td>
+      </tr>
+    </table>
+  </div>
+</header>
+
+    <div class="outer">
+      
+        <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="/css/images/my_avatar.png">
+      <h2 id="name">Pheynix</h2>
+      <h3 id="title">一只野生安卓程序猿</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>深圳, 中国</span>
+      <a id="follow" href="https://github.com/pheynix">FOLLOW</a>
+    </div>
+    <div class="article-info profile-block">
+      <div class="article-info-block">
+        14
+        <span>posts</span>
+      </div>
+      <div class="article-info-block">
+        26
+        <span>tags</span>
+      </div>
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+          <td><a href="http://github.com/pheynix" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+          
+          <td><a href="https://www.facebook.com/pheynixdu" target="_blank" title="facebook"><i class="fa fa-facebook"></i></a></td>
+          
+        </tr>
+      </table>
+    </div>
+    
+    
+  </div>
+</aside>
+
+      
+      <section id="main"><article id="post-013_userconfig" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      
+	
+		<img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/userconfig/banner_children.jpeg" class="article-banner">
+	
+
+
+
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      利用UserConfig单例加快数据读取速度
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2016/02/12/013_userconfig/">
+      <time datetime="2016-02-12T13:24:10.000Z" itemprop="datePublished">2016-02-12</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>在程序运行的过程中，经常要查询使用当前用户的相关信息，例如用户的权限等级、标示用户需要的Token、ID、名字等。这些信息一般来说保存在SharePreferences中。为了加快这些信息的读取速度，可以在APP启动的时候加载到UserConfig类中，作为静态变量，伴随着APP的生命周期。</p>
+<h3 id="用法">用法</h3><h5 id="定义UserConfig类">定义UserConfig类</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class UserConfig &#123;&#10;    public static final String USER_CONFIG = &#34;user_config&#34;;&#10;&#10;    public static final String ID = &#34;id&#34;;&#10;    public static final String PHONE = &#34;phone&#34;;&#10;    public static final String NAME = &#34;name&#34;;&#10;    public static final String POSITION = &#34;position&#34;;&#10;    public static final String USER_ID = &#34;user_id&#34;;&#10;    public static final String COMPANY_ID = &#34;company_id&#34;;&#10;    public static final String ACCESS_TOKEN = &#34;access_token&#34;;&#10;    public static final String REFRESH_TOKEN = &#34;refresh_token&#34;;&#10;    public static final String IS_LOGIN = &#34;is_login&#34;;&#10;&#10;    private static UserConfig instance;&#10;&#10;    private int id = -1;&#10;    private String phone = &#34;&#34;;&#10;    private String name = &#34;&#34;;&#10;    private String position = &#34;&#34;;&#10;    private int userId = -1;&#10;    private int companyId = -1;&#10;    private String accessToken = &#34;&#34;;&#10;    private String refreshToken = &#34;&#34;;&#10;    private boolean isLogin = false;&#10;&#10;    /**&#10;     * &#21333;&#20363;&#27169;&#24335;&#10;     */&#10;    public static UserConfig getInstance() &#123;&#10;        if (instance == null) &#123;&#10;            synchronized (UserConfig.class) &#123;&#10;                if (instance == null) &#123;&#10;                    instance = new UserConfig();&#10;                &#125;&#10;            &#125;&#10;        &#125;&#10;        return instance;&#10;    &#125;&#10;&#10;    /**&#10;     * &#23454;&#20363;&#21270;&#26102;&#21152;&#36733;&#25968;&#25454;&#10;     */&#10;    private UserConfig() &#123;&#10;        SharedPreferences preferences = getSharedPreferences();&#10;        id = preferences.getInt(ID, -1);&#10;        phone = preferences.getString(PHONE, &#34;&#34;);&#10;        name = preferences.getString(NAME, &#34;&#34;);&#10;        position = preferences.getString(POSITION, &#34;&#34;);&#10;        userId = preferences.getInt(USER_ID, -1);&#10;        companyId = preferences.getInt(COMPANY_ID, -1);&#10;        accessToken = preferences.getString(ACCESS_TOKEN, &#34;&#34;);&#10;        refreshToken = preferences.getString(REFRESH_TOKEN, &#34;&#34;);&#10;        isLogin = preferences.getBoolean(IS_LOGIN, false);&#10;    &#125;&#10;&#10;    &#10;    /**&#10;     * &#22312;&#24688;&#24403;&#30340;&#26102;&#20505;&#21047;&#26032;&#25968;&#25454;&#65292;&#21487;&#20197;&#32771;&#34385;&#35774;&#32622;&#25104;&#26377;&#21442;&#25968;&#27169;&#24335;&#65292;&#25351;&#23450;&#38656;&#35201;&#37325;&#26032;&#21152;&#36733;&#30340;&#31181;&#31867;&#10;     * &#22914;&#26524;&#26377;&#26356;&#26032;&#65292;&#20351;&#29992;RxBus&#21457;&#36865;&#26356;&#26032;&#20107;&#20214;&#10;     */&#10;    public void reload() &#123;&#10;        SharedPreferences preferences = getSharedPreferences();&#10;&#10;        boolean isLoginNew = preferences.getBoolean(IS_LOGIN, false);&#10;        if (isLogin != isLoginNew) &#123;&#10;            isLogin = isLoginNew;&#10;            sendEvent(IS_LOGIN);&#10;        &#125;&#10;&#10;        String accessTokenNew = preferences.getString(ACCESS_TOKEN, &#34;&#34;);&#10;        if (!accessToken.equals(accessTokenNew)) &#123;&#10;            accessToken = accessTokenNew;&#10;            sendEvent(ACCESS_TOKEN);&#10;        &#125;&#10;&#10;        String refreshTokenNew = preferences.getString(REFRESH_TOKEN, &#34;&#34;);&#10;        if (!refreshToken.equals(refreshTokenNew)) &#123;&#10;            refreshToken = refreshTokenNew;&#10;            sendEvent(REFRESH_TOKEN);&#10;        &#125;&#10;&#10;&#10;        if (isLogin) &#123;&#10;            MpServiceFactory.getMpService().getProfile(accessToken, new retrofit.Callback&#60;Contact&#62;() &#123;&#10;                @Override&#10;                public void success(Contact contact, retrofit.client.Response response) &#123;&#10;                    if (id != contact.getId()) &#123;&#10;                        id = contact.getId();&#10;                        sendEvent(ID);&#10;                    &#125;&#10;                    if (!phone.equals(contact.getPhone())) &#123;&#10;                        phone = contact.getPhone();&#10;                        if (phone == null) phone = &#34;&#34;;&#10;                        sendEvent(PHONE);&#10;                    &#125;&#10;                    if (!name.equals(contact.getName())) &#123;&#10;                        name = contact.getName();&#10;                        if (name == null) name = &#34;&#34;;&#10;                        sendEvent(NAME);&#10;                    &#125;&#10;                    if (!position.equals(contact.getPosition())) &#123;&#10;                        position = contact.getPosition();&#10;                        if (position == null) position = &#34;&#34;;&#10;                        sendEvent(POSITION);&#10;                    &#125;&#10;                    if (userId != contact.getUserId()) &#123;&#10;                        userId = contact.getUserId();&#10;                        sendEvent(USER_ID);&#10;                    &#125;&#10;                    if (companyId != contact.getCompanyId()) &#123;&#10;                        companyId = contact.getCompanyId();&#10;                        sendEvent(COMPANY_ID);&#10;                    &#125;&#10;&#10;                &#125;&#10;&#10;                @Override&#10;                public void failure(RetrofitError error) &#123;&#10;                    RetrofitHandler.handleError(error);&#10;                &#125;&#10;            &#125;);&#10;        &#125;&#10;    &#125;&#10;&#10;&#10;    public void clear() &#123;&#10;        getEditor().clear().apply();&#10;        id = -1;&#10;        phone = &#34;&#34;;&#10;        name = &#34;&#34;;&#10;        position = &#34;&#34;;&#10;        userId = -1;&#10;        companyId = -1;&#10;        accessToken = &#34;&#34;;&#10;        refreshToken = &#34;&#34;;&#10;        isLogin = false;&#10;    &#125;&#10;&#10;    public void save() &#123;&#10;        getEditor()&#10;                .putInt(ID, id)&#10;                .putString(PHONE, phone)&#10;                .putString(NAME, name)&#10;                .putString(POSITION, position)&#10;                .putInt(USER_ID, userId)&#10;                .putInt(COMPANY_ID, companyId)&#10;                .putString(ACCESS_TOKEN, accessToken)&#10;                .putString(REFRESH_TOKEN, refreshToken)&#10;                .apply();&#10;    &#125;&#10;&#10;&#10;    private void sendEvent(String type) &#123;&#10;        RxBus.getBus().send(new UserConfigUpdatedEvent(type));&#10;    &#125;&#10;&#10;&#10;    private SharedPreferences getSharedPreferences() &#123;&#10;        return App.mContext.getSharedPreferences(USER_CONFIG, Context.MODE_PRIVATE);&#10;    &#125;&#10;&#10;    private SharedPreferences.Editor getEditor() &#123;&#10;        return getSharedPreferences().edit();&#10;    &#125;&#10;&#10;&#10;    public void setId(int id) &#123;&#10;        if (this.id == id) return;&#10;        this.id = id;&#10;        getEditor().putInt(ID, id).apply();&#10;        sendEvent(ID);&#10;    &#125;&#10;&#10;    public void setPhone(String phone) &#123;&#10;        if (this.phone.equals(phone)) return;&#10;        this.phone = phone;&#10;        if (this.phone == null) this.phone = &#34;&#34;;&#10;        getEditor().putString(PHONE, phone).apply();&#10;        sendEvent(PHONE);&#10;    &#125;&#10;&#10;    public void setName(String name) &#123;&#10;        if (this.name.equals(name)) return;&#10;        this.name = name;&#10;        if (this.name == null) this.name = &#34;&#34;;&#10;        getEditor().putString(NAME, name).apply();&#10;        sendEvent(NAME);&#10;    &#125;&#10;&#10;    public void setPosition(String position) &#123;&#10;        if (this.position.equals(position)) return;&#10;        this.position = position;&#10;        if (this.position == null) this.position = &#34;&#34;;&#10;        getEditor().putString(POSITION, position).apply();&#10;        sendEvent(POSITION);&#10;    &#125;&#10;&#10;    public void setUserId(int userId) &#123;&#10;        if (this.userId == userId) return;&#10;        this.userId = userId;&#10;        getEditor().putInt(USER_ID, userId).apply();&#10;        sendEvent(USER_ID);&#10;    &#125;&#10;&#10;    public void setCompanyId(int companyId) &#123;&#10;        if (this.companyId == companyId) return;&#10;        this.companyId = companyId;&#10;        getEditor().putInt(COMPANY_ID, companyId).apply();&#10;        sendEvent(COMPANY_ID);&#10;    &#125;&#10;&#10;&#10;    public void setAccessToken(String accessToken) &#123;&#10;        if (this.accessToken.equals(accessToken)) return;&#10;        this.accessToken = accessToken;&#10;        if (this.accessToken == null) this.accessToken = &#34;&#34;;&#10;        getEditor().putString(ACCESS_TOKEN, accessToken).apply();&#10;        sendEvent(ACCESS_TOKEN);&#10;    &#125;&#10;&#10;&#10;    public void setRefreshToken(String refreshToken) &#123;&#10;        if (this.refreshToken.equals(refreshToken)) return;&#10;        this.refreshToken = refreshToken;&#10;        if (this.refreshToken == null) this.refreshToken = &#34;&#34;;&#10;        getEditor().putString(REFRESH_TOKEN, refreshToken).apply();&#10;        sendEvent(REFRESH_TOKEN);&#10;    &#125;&#10;&#10;    public void setIsLogin(boolean isLogin) &#123;&#10;        if (this.isLogin == isLogin) return;&#10;        this.isLogin = isLogin;&#10;        getEditor().putBoolean(IS_LOGIN, isLogin).apply();&#10;        sendEvent(IS_LOGIN);&#10;    &#125;&#10;&#10;    public int getId() &#123;&#10;        return id;&#10;    &#125;&#10;&#10;    public String getPhone() &#123;&#10;        return phone;&#10;    &#125;&#10;&#10;    public String getName() &#123;&#10;        return name;&#10;    &#125;&#10;&#10;    public String getPosition() &#123;&#10;        return position;&#10;    &#125;&#10;&#10;    public int getUserId() &#123;&#10;        return userId;&#10;    &#125;&#10;&#10;    public int getCompanyId() &#123;&#10;        return companyId;&#10;    &#125;&#10;&#10;&#10;    public String getAccessToken() &#123;&#10;        return accessToken;&#10;    &#125;&#10;&#10;&#10;    public String getRefreshToken() &#123;&#10;        return refreshToken;&#10;    &#125;&#10;&#10;    public boolean isLogin() &#123;&#10;        return isLogin;&#10;    &#125;&#10;&#10;    public static class UserConfigUpdatedEvent &#123;&#10;        private String type = &#34;&#34;;&#10;&#10;        public UserConfigUpdatedEvent(String type) &#123;&#10;            this.type = type;&#10;        &#125;&#10;&#10;        public String getType() &#123;&#10;            return type;&#10;        &#125;&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="在代码中使用">在代码中使用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RequestInterceptor requestInterceptor = new RequestInterceptor() &#123;  &#10;    @Override&#10;    public void intercept(RequestFacade request) &#123;&#10;        request.addHeader(&#34;Authorization&#34;, UserConfig.accessToken);&#10;        request.addHeader(&#34;Content-Type&#34;, &#34;application/json&#34;);&#10;    &#125;&#10;&#125;;&#10;&#10;RestAdapter restAdapter = new RestAdapter.Builder()  &#10;    .setEndpoint(Globle.endPoint)&#10;    .setRequestInterceptor(requestInterceptor)&#10;    .build();</span><br></pre></td></tr></table></figure>
+<p>由于是单例模式，在第一次创建的时候会加载所有数据，简单使用。这样一个不高深但实用的工具类编写完了。</p>
+<h5 id="优化">优化</h5><p>在reload()方法中，可以考虑使用位运算的方法判断需要重新加载类型。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public static final int TYPE_A = 1; //&#20108;&#36827;&#21046;00001&#10;public static final int TYPE_B = 2; //&#20108;&#36827;&#21046;00010&#10;public static final int TYPE_C = 4; //&#20108;&#36827;&#21046;00100&#10;public static final int TYPE_D = 8; //&#20108;&#36827;&#21046;01000&#10;public static final int TYPE_E = 16;//&#20108;&#36827;&#21046;10000&#10;public static final int TYPE_ALL = TYPE_A | TYPE_B | TYPE_C | TYPE_D | TYPE_E;//&#20108;&#36827;&#21046;11111&#10;&#10;public void reload(int type)&#123;&#10;    if ((type &#38; TYPE_A) != 0)&#123;&#10;        //&#37325;&#26032;&#21152;&#36733;A&#31867;&#22411;&#10;    &#125;&#10;&#10;    if ((type &#38; TYPE_B) != 0)&#123;&#10;        //&#37325;&#26032;&#21152;&#36733;B&#31867;&#22411;&#10;    &#125;&#10;&#10;    if ((type &#38; TYPE_C) != 0)&#123;&#10;        //&#37325;&#26032;&#21152;&#36733;C&#31867;&#22411;&#10;    &#125;&#10;&#10;    if ((type &#38; TYPE_D) != 0)&#123;&#10;        //&#37325;&#26032;&#21152;&#36733;D&#31867;&#22411;&#10;    &#125;&#10;&#10;    if ((type &#38; TYPE_E) != 0)&#123;&#10;        //&#37325;&#26032;&#21152;&#36733;E&#31867;&#22411;&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://pheynix.github.io/2016/02/12/013_userconfig/" data-id="cil576lag000epfgm315wufqb" class="article-share-link">Share</a>
+      
+        <a href="http://pheynix.github.io/2016/02/12/013_userconfig/#ds-thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/02/22/014_use_open_source_project/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          怎么选择使用开源项目
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/28/012_sharepreference_util/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">定义工具类减少项目的重复代码</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="http://pheynix.github.io/2016/02/12/013_userconfig/" data-title="利用UserConfig单例加快数据读取速度" data-url="http://pheynix.github.io/2016/02/12/013_userconfig/">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by DuoShuo.</a></noscript>
+      </div>
+  </section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">recents</h3>
+    <div class="widget">
+      <ul id="recent-post" class="">
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/02/22/014_use_open_source_project/" class="thumbnail">
+  
+    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/open_source/banner_clothes.jpeg)" alt="怎么选择使用开源项目" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/02/22/014_use_open_source_project/" class="title">怎么选择使用开源项目</a></p>
+              <p class="item-date"><time datetime="2016-02-22T13:24:10.000Z" itemprop="datePublished">2016-02-22</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/02/12/013_userconfig/" class="thumbnail">
+  
+    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/userconfig/banner_children.jpeg)" alt="利用UserConfig单例加快数据读取速度" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/02/12/013_userconfig/" class="title">利用UserConfig单例加快数据读取速度</a></p>
+              <p class="item-date"><time datetime="2016-02-12T13:24:10.000Z" itemprop="datePublished">2016-02-12</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/01/28/012_sharepreference_util/" class="thumbnail">
+  
+    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/sp_util/banner_firework.jpeg)" alt="定义工具类减少项目的重复代码" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/01/28/012_sharepreference_util/" class="title">定义工具类减少项目的重复代码</a></p>
+              <p class="item-date"><time datetime="2016-01-28T13:24:10.000Z" itemprop="datePublished">2016-01-28</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/01/21/011_java_comment/" class="thumbnail">
+  
+    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/java_comment/banner_coastal.jpeg)" alt="Java注释基础用法" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/01/21/011_java_comment/" class="title">Java注释基础用法</a></p>
+              <p class="item-date"><time datetime="2016-01-21T13:24:10.000Z" itemprop="datePublished">2016-01-21</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/01/20/008_basic_okhttp_usage/" class="thumbnail">
+  
+    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/basic_okhttp/banner_night.jpeg)" alt="OkHttp基本用法" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/01/20/008_basic_okhttp_usage/" class="title">OkHttp基本用法</a></p>
+              <p class="item-date"><time datetime="2016-01-20T13:24:10.000Z" itemprop="datePublished">2016-01-20</time></p>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/2015/">2015</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Exception/">Exception</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JUnit/">JUnit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RxJava/">RxJava</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/animation/">animation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/comment/">comment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/footprint/">footprint</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/learning/">learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mp/">mp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/open/">open</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/original/">original</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/plaid/">plaid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reading/">reading</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skill/">skill</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/summary/">summary</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/trouble/">trouble</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">tag cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/2015/" style="font-size: 10px;">2015</a> <a href="/tags/Exception/" style="font-size: 10px;">Exception</a> <a href="/tags/JUnit/" style="font-size: 10px;">JUnit</a> <a href="/tags/RxJava/" style="font-size: 10px;">RxJava</a> <a href="/tags/android/" style="font-size: 20px;">android</a> <a href="/tags/animation/" style="font-size: 10px;">animation</a> <a href="/tags/comment/" style="font-size: 10px;">comment</a> <a href="/tags/footprint/" style="font-size: 10px;">footprint</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/learning/" style="font-size: 10px;">learning</a> <a href="/tags/mp/" style="font-size: 10px;">mp</a> <a href="/tags/open/" style="font-size: 10px;">open</a> <a href="/tags/original/" style="font-size: 10px;">original</a> <a href="/tags/plaid/" style="font-size: 10px;">plaid</a> <a href="/tags/reading/" style="font-size: 16.67px;">reading</a> <a href="/tags/skill/" style="font-size: 13.33px;">skill</a> <a href="/tags/summary/" style="font-size: 10px;">summary</a> <a href="/tags/trouble/" style="font-size: 13.33px;">trouble</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+  <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 1991 - 2016 Pheynix<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"pheynix"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

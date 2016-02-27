@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>定义工具类减少项目的重复代码 | Pheynix&#39;s footprint</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="根据三振法, 
+
+
+The first time you do something, you just do it.
+The second time you do something similar, you wince at the duplication, but you do the duplicate thing anyway.
+The third time you do somethin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="定义工具类减少项目的重复代码">
+<meta property="og:url" content="http://pheynix.github.io/2016/01/28/012_sharepreference_util/index.html">
+<meta property="og:site_name" content="Pheynix's footprint">
+<meta property="og:description" content="根据三振法, 
+
+
+The first time you do something, you just do it.
+The second time you do something similar, you wince at the duplication, but you do the duplicate thing anyway.
+The third time you do somethin">
+<meta property="og:updated_time" content="2016-02-27T14:01:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="定义工具类减少项目的重复代码">
+<meta name="twitter:description" content="根据三振法, 
+
+
+The first time you do something, you just do it.
+The second time you do something similar, you wince at the duplication, but you do the duplicate thing anyway.
+The third time you do somethin">
+  
+  
+    <link rel="icon" href="favicon.png">
+  
+  
+ <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+ <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css" type="text/css">
+  
+
+  
+
+  
+</head>
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="/" id="logo"><span class="site-title">Pheynix&#39;s footprint</span></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/.">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/categories">Categories</a>
+        
+          <a class="main-nav-link" href="/tags">Tags</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="/css/images/my_avatar.png"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+      
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://pheynix.github.io"></form>
+      </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tr>
+        
+          <td><a class="main-nav-link" href="/.">Home</a></td>
+        
+          <td><a class="main-nav-link" href="/archives">Archives</a></td>
+        
+          <td><a class="main-nav-link" href="/categories">Categories</a></td>
+        
+          <td><a class="main-nav-link" href="/tags">Tags</a></td>
+        
+          <td><a class="main-nav-link" href="/about">About</a></td>
+        
+        <td>
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://pheynix.github.io"></form>
+        </td>
+      </tr>
+    </table>
+  </div>
+</header>
+
+    <div class="outer">
+      
+        <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="/css/images/my_avatar.png">
+      <h2 id="name">Pheynix</h2>
+      <h3 id="title">一只野生安卓程序猿</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>深圳, 中国</span>
+      <a id="follow" href="https://github.com/pheynix">FOLLOW</a>
+    </div>
+    <div class="article-info profile-block">
+      <div class="article-info-block">
+        14
+        <span>posts</span>
+      </div>
+      <div class="article-info-block">
+        26
+        <span>tags</span>
+      </div>
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+          <td><a href="http://github.com/pheynix" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+          
+          <td><a href="https://www.facebook.com/pheynixdu" target="_blank" title="facebook"><i class="fa fa-facebook"></i></a></td>
+          
+        </tr>
+      </table>
+    </div>
+    
+    
+  </div>
+</aside>
+
+      
+      <section id="main"><article id="post-012_sharepreference_util" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      
+	
+		<img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/sp_util/banner_firework.jpeg" class="article-banner">
+	
+
+
+
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      定义工具类减少项目的重复代码
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2016/01/28/012_sharepreference_util/">
+      <time datetime="2016-01-28T13:24:10.000Z" itemprop="datePublished">2016-01-28</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>根据<a href="http://c2.com/cgi/wiki?ThreeStrikesAndYouRefactor" target="_blank" rel="external">三振法</a>, </p>
+<blockquote>
+<ul>
+<li>The first time you do something, you just do it.</li>
+<li>The second time you do something similar, you wince at the duplication, but you do the duplicate thing anyway.</li>
+<li><p>The third time you do something similar, you refactor.</p>
+</li>
+<li><p>某件事第一次做的时候不需要考虑</p>
+</li>
+<li>第二次做的时候，或许不喜欢复制的方式，不过也没有太大的问题</li>
+<li>第三次做的时候，就需要考虑重构了</li>
+</ul>
+</blockquote>
+<p>如果发现某段代码被复制了2次，那么就可以重构成工具类，方便日后的使用。<br>在开发Android应用的过程中，普遍需要编写一些工具类例如：与文件有关的<code>FileUtil</code> 、与日期相关的<code>DateUtils</code>；Android系统提供的<code>TextUtil</code>和<code>AnimationUtils</code>等<br>经常需要使用的SharePreferences用于保存键值对，利用工具类可以减少获取Editor/SharedPreferences对象的重复代码。</p>
+<h2 id="使用">使用</h2><h5 id="定义工具类">定义工具类</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class SPUtil &#123;&#10;    public static final String SP_NAME = &#34;sp_name&#34;;&#10;&#10;    /**&#10;     * &#20445;&#23384;&#25968;&#25454;&#21040;SharedPreferences&#10;     */&#10;    public static void put(String key, Object value) &#123;&#10;        isKeyNull(key);&#10;        SharedPreferences.Editor editor = getEditor();&#10;&#10;        if (value instanceof String) &#123;&#10;            editor.putString(key, (String) value);&#10;        &#125; else if (value instanceof Integer) &#123;&#10;            editor.putInt(key, (Integer) value);&#10;        &#125; else if (value instanceof Boolean) &#123;&#10;            editor.putBoolean(key, (Boolean) value);&#10;        &#125; else if (value instanceof Float) &#123;&#10;            editor.putFloat(key, (Float) value);&#10;        &#125; else if (value instanceof Long) &#123;&#10;            editor.putLong(key, (Long) value);&#10;        &#125; else &#123;&#10;            editor.putString(key, value.toString());&#10;        &#125;&#10;&#10;        editor.apply();&#10;    &#125;&#10;&#10;    /**&#10;     * &#33719;&#21462;SharedPreferences&#30340;&#25968;&#25454;&#10;     */&#10;    @Nullable&#10;    public static Object get(@NonNull String key, @Nullable Object defaultValue) &#123;&#10;        isKeyNull(key);&#10;        SharedPreferences sp = App.context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);&#10;&#10;        if (defaultValue instanceof String) &#123;&#10;            return sp.getString(key, (String) defaultValue);&#10;        &#125; else if (defaultValue instanceof Integer) &#123;&#10;            return sp.getInt(key, (Integer) defaultValue);&#10;        &#125; else if (defaultValue instanceof Boolean) &#123;&#10;            return sp.getBoolean(key, (Boolean) defaultValue);&#10;        &#125; else if (defaultValue instanceof Float) &#123;&#10;            return sp.getFloat(key, (Float) defaultValue);&#10;        &#125; else if (defaultValue instanceof Long) &#123;&#10;            return sp.getLong(key, (Long) defaultValue);&#10;        &#125;&#10;&#10;        return defaultValue;&#10;    &#125;&#10;&#10;    /**&#10;     * &#31227;&#38500;key&#23545;&#24212;&#30340;&#20540;&#10;     */&#10;    public static void remove(Context context, String key) &#123;&#10;        isKeyNull(key);&#10;        getEditor().remove(key).apply();&#10;    &#125;&#10;&#10;    /**&#10;     * &#28165;&#38500;&#25152;&#26377;&#25968;&#25454;&#10;     */&#10;    public static void clear(Context context) &#123;&#10;        getEditor().clear().apply();&#10;    &#125;&#10;&#10;    private static SharedPreferences.Editor getEditor() &#123;&#10;        return App.context&#10;                .getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)&#10;                .edit();&#10;    &#125;&#10;&#10;    private static void isKeyNull(String key)&#123;&#10;        if (TextUtils.isEmpty(key)) throw new IllegalArgumentException(&#34;&#38190;&#19981;&#33021;&#20026;null&#34;);&#10;    &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="在代码中使用">在代码中使用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Override public void onCreate() &#123;&#10;        super.onCreate();&#10;        String something = SPUtil.get(&#34;key&#34;, &#34;value&#34;);&#10;        SPUtil.put(&#34;key&#34;, &#34;something else&#34;);&#10;    &#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://pheynix.github.io/2016/01/28/012_sharepreference_util/" data-id="cil576lap000hpfgmxln8mrca" class="article-share-link">Share</a>
+      
+        <a href="http://pheynix.github.io/2016/01/28/012_sharepreference_util/#ds-thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/02/12/013_userconfig/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          利用UserConfig单例加快数据读取速度
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/21/011_java_comment/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Java注释基础用法</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="http://pheynix.github.io/2016/01/28/012_sharepreference_util/" data-title="定义工具类减少项目的重复代码" data-url="http://pheynix.github.io/2016/01/28/012_sharepreference_util/">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by DuoShuo.</a></noscript>
+      </div>
+  </section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">recents</h3>
+    <div class="widget">
+      <ul id="recent-post" class="">
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/02/22/014_use_open_source_project/" class="thumbnail">
+  
+    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/open_source/banner_clothes.jpeg)" alt="怎么选择使用开源项目" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/02/22/014_use_open_source_project/" class="title">怎么选择使用开源项目</a></p>
+              <p class="item-date"><time datetime="2016-02-22T13:24:10.000Z" itemprop="datePublished">2016-02-22</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/02/12/013_userconfig/" class="thumbnail">
+  
+    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/userconfig/banner_children.jpeg)" alt="利用UserConfig单例加快数据读取速度" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/02/12/013_userconfig/" class="title">利用UserConfig单例加快数据读取速度</a></p>
+              <p class="item-date"><time datetime="2016-02-12T13:24:10.000Z" itemprop="datePublished">2016-02-12</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/01/28/012_sharepreference_util/" class="thumbnail">
+  
+    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/sp_util/banner_firework.jpeg)" alt="定义工具类减少项目的重复代码" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/01/28/012_sharepreference_util/" class="title">定义工具类减少项目的重复代码</a></p>
+              <p class="item-date"><time datetime="2016-01-28T13:24:10.000Z" itemprop="datePublished">2016-01-28</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/01/21/011_java_comment/" class="thumbnail">
+  
+    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/java_comment/banner_coastal.jpeg)" alt="Java注释基础用法" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/01/21/011_java_comment/" class="title">Java注释基础用法</a></p>
+              <p class="item-date"><time datetime="2016-01-21T13:24:10.000Z" itemprop="datePublished">2016-01-21</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/01/20/008_basic_okhttp_usage/" class="thumbnail">
+  
+    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/basic_okhttp/banner_night.jpeg)" alt="OkHttp基本用法" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/01/20/008_basic_okhttp_usage/" class="title">OkHttp基本用法</a></p>
+              <p class="item-date"><time datetime="2016-01-20T13:24:10.000Z" itemprop="datePublished">2016-01-20</time></p>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/2015/">2015</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Exception/">Exception</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JUnit/">JUnit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RxJava/">RxJava</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/animation/">animation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/comment/">comment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/footprint/">footprint</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/learning/">learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mp/">mp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/open/">open</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/original/">original</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/plaid/">plaid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reading/">reading</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skill/">skill</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/summary/">summary</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/trouble/">trouble</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">tag cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/2015/" style="font-size: 10px;">2015</a> <a href="/tags/Exception/" style="font-size: 10px;">Exception</a> <a href="/tags/JUnit/" style="font-size: 10px;">JUnit</a> <a href="/tags/RxJava/" style="font-size: 10px;">RxJava</a> <a href="/tags/android/" style="font-size: 20px;">android</a> <a href="/tags/animation/" style="font-size: 10px;">animation</a> <a href="/tags/comment/" style="font-size: 10px;">comment</a> <a href="/tags/footprint/" style="font-size: 10px;">footprint</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/learning/" style="font-size: 10px;">learning</a> <a href="/tags/mp/" style="font-size: 10px;">mp</a> <a href="/tags/open/" style="font-size: 10px;">open</a> <a href="/tags/original/" style="font-size: 10px;">original</a> <a href="/tags/plaid/" style="font-size: 10px;">plaid</a> <a href="/tags/reading/" style="font-size: 16.67px;">reading</a> <a href="/tags/skill/" style="font-size: 13.33px;">skill</a> <a href="/tags/summary/" style="font-size: 10px;">summary</a> <a href="/tags/trouble/" style="font-size: 13.33px;">trouble</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+  <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 1991 - 2016 Pheynix<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"pheynix"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

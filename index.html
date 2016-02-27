@@ -97,11 +97,11 @@
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
-        6
+        14
         <span>posts</span>
       </div>
       <div class="article-info-block">
-        10
+        26
         <span>tags</span>
       </div>
     </div>
@@ -124,12 +124,12 @@
 
       
       <section id="main">
-      <article id="post-android_rotation_trouble" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-014_use_open_source_project" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       
 	
-		<a href="/2016/01/10/android_rotation_trouble/" itemprop="url"><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/animation_trouble/The.Martian.2015.png" class="article-banner"></a>
+		<a href="/2016/02/22/014_use_open_source_project/" itemprop="url"><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/open_source/banner_clothes.jpeg" class="article-banner"></a>
 	
 
 
@@ -141,7 +141,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/10/android_rotation_trouble/">Android旋转动画闪烁问题</a>
+      <a class="article-title" href="/2016/02/22/014_use_open_source_project/">怎么选择使用开源项目</a>
     </h1>
   
 
@@ -149,8 +149,8 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2016/01/10/android_rotation_trouble/">
-      <time datetime="2016-01-10T13:24:10.000Z" itemprop="datePublished">2016-01-10</time>
+    <a href="/2016/02/22/014_use_open_source_project/">
+      <time datetime="2016-02-22T13:24:10.000Z" itemprop="datePublished">2016-02-22</time>
     </a>
   </div>
 
@@ -162,73 +162,288 @@
     <div class="article-entry" itemprop="articleBody">
       
                 
-        <h4 id="问题">问题</h4><p>项目需要实现点击按钮后旋转按钮的需求<br>在res/anim中新建anim_close.xml</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;rotate&#10;    xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;&#10;    android:duration=&#34;1000&#34;&#10;    android:interpolator=&#34;@android:interpolator/overshoot&#34;&#10;    android:fromDegrees=&#34;0&#34;&#10;    android:pivotX=&#34;50%&#34;&#10;    android:pivotY=&#34;50%&#34;&#10;    android:startOffset=&#34;0&#34;&#10;    android:toDegrees=&#34;45&#34;/&#62;</span><br></pre></td></tr></table></figure>
-<p>和anim_open.xml</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&#62;&#10;&#60;rotate&#10;    xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;&#10;    android:duration=&#34;500&#34;&#10;    android:fromDegrees=&#34;0&#34;&#10;    android:interpolator=&#34;@android:interpolator/overshoot&#34;&#10;    android:pivotX=&#34;50%&#34;&#10;    android:pivotY=&#34;50%&#34;&#10;    android:startOffset=&#34;0&#34;&#10;    android:toDegrees=&#34;-45&#34;/&#62;</span><br></pre></td></tr></table></figure>
-<p>其中</p>
+        <p>很多时候，限于项目进度要求和避免重复造轮子的浪费，或多或少会使用到开源项目，怎么快速挑选、使用恰当的开源项目很大程度影响项目日后的开发。</p>
+<h4 id="收集、选择现有能满足需求的项目框架">收集、选择现有能满足需求的项目框架</h4><p>例如网络访问框架，使用“android网络请求框架”和“android network”等关键词进行搜索之后就可以大致得到当下流行的一些网络请求框架：</p>
 <ul>
-<li><code>fromDegrees</code>表示动画开始时候的角度</li>
-<li><code>toDegrees</code>表示动画结束时候的角度</li>
-<li>上述角度叠加在ImageView的<code>android:rotation</code>之上；例如当前rotation是45°，fromDegrees是45°，那么动画从90°的位置开始播放。</li>
-<li><strong>动画结束后恢复原样</strong></li>
+<li><a href="https://github.com/square/retrofit" target="_blank" rel="external">Retrofit</a></li>
+<li><a href="http://square.github.io/okhttp/" target="_blank" rel="external">OkHTTP</a></li>
+<li><a href="http://developer.android.com/intl/zh-cn/training/volley/index.html" target="_blank" rel="external">Volley</a></li>
+<li><a href="https://github.com/loopj/android-async-http" target="_blank" rel="external">android-async-http</a></li>
+<li><a href="https://github.com/yangfuhai/afinal" target="_blank" rel="external">Afinal</a></li>
+<li><a href="https://github.com/wyouflf/xUtils3" target="_blank" rel="external">xUtils</a><br>一般考虑易用性、符合项目需求程度、用户数量、项目更新频次等因素。原则上满足需求前提下，尽量选择符合标准（例如HTTP标准）、功能专注且作者还在积极维护的项目。</li>
 </ul>
-<p>开始的时候打算在**动画结束后修改调用<code>ivShortcut.setRotation(45)</code>旋转ImageView。但是由于动画结束首先恢复原样(0°)，然后才修改旋转角度，会造成闪烁的情况。</p>
-<p><a href="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/animation_trouble/animation_trouble.mov" target="_blank" rel="external">闪烁的屏幕录像</a></p>
-<h4 id="解决方案">解决方案</h4><p>先修改ImageView的角度为最终角度，然后启动动画，动画的<code>fromDegrees</code>值和<code>toDegrees</code>改为相应的值。</p>
+<h4 id="查阅文档和教程，熟悉使用方法">查阅文档和教程，熟悉使用方法</h4><p>一个优秀的开源项目，必定会提供有相关的项目文档和sample项目。<br>以Retrofit为例，项目的github仓库中的README.md中有明确的项目定位说明、导入方法和使用限制</p>
+<blockquote>
+<p>Retrofit requires at minimum Java 7 or Android 2.3.</p>
+</blockquote>
+<p>项目中也附带了sample项目，可以直接导入到Android studio运行和阅读。<br>在项目的<a href="http://square.github.io/retrofit/" target="_blank" rel="external">主页</a>中，作者对该项目的调用方法做了详尽的说明。基本上，阅读完这些材料之后已经可以上手这个开源框架了。如果实在还没有头绪，可以使用中文搜索引擎搜索中文的相关使用博客文章。</p>
+<h4 id="引入、使用项目">引入、使用项目</h4><p>使用Android Studio之后，引入一个开源框架的方法大致有三种：</p>
+<ul>
+<li>添加Maven/Gradle依赖</li>
+<li>下载导入JAR文件</li>
+<li>导入项目源文件作为module</li>
+</ul>
+<p>对于添加依赖的方法，以Gradle为例，在原项目中的build.gradle中的<code>dependencies</code>中添加依赖语句即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile &#39;com.squareup.retrofit2:retrofit:2.0.0-beta3&#39;</span><br></pre></td></tr></table></figure></p>
+<p>对于JAR文件，下载回来之后，复制到<code>/libs</code>文件夹中，然后在Android Studio中右键点击并选择<code>Add as library</code>，到<code>gradle.build</code>如果发现有一句<code>compile files(&#39;libs/lite-orm-1.7.0.jar&#39;)</code>说明导入成功。</p>
+<p>对于第三中导入项目源文件作为module的方法，稍微复杂一些，但是带来的优点是可以按照项目需求修改导入的开源框架的代码，拥有更大的主动权。<br>以HeadsUp项目为例，使用<code>git clone https://github.com/zzz40500/HeadsUp.git</code>将项目克隆到本地之后，依次选择File -&gt; New -&gt; Import module，然后选择想要导入的library即可。<br>然后根据项目需求，做一些修改即可。<br><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/open_source/mport_module.png" alt="File-&gt;New-&gt;Import_module"></p>
+<p>三种引入方式都会在Gradle.build文件中生成一句代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;&#10;    compile fileTree(include: [&#39;*.jar&#39;], dir: &#39;libs&#39;)&#10;    compile &#39;com.squareup.retrofit2:retrofit:2.0.0-beta3&#39;&#10;    compile files(&#39;libs/lite-orm-1.7.0.jar&#39;)&#10;    compile project(&#39;:library_ImagePicker&#39;)&#10;&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="解决使用过程中遇到得问题">解决使用过程中遇到得问题</h4><p>很喜欢<a href="http://www.imdb.com/title/tt3659388/" target="_blank" rel="external">The Martian</a>中的一段话：</p>
+<blockquote>
+<p>At some point, everything’s going to go south on you.<br>Everything’s going to go south and you’re going to say “This is it.”<br>That is how I end.<br>Now you can either accept that<br>or you can get to work.<br>That’s all it is.<br>You just begin.<br>You do the math. You solve one problem<br>and you solve the next one,<br>and then the next.<br>And If you solve enough problems, you get to come home.</p>
+</blockquote>
+<p>If you solve enough problems, you get to come home.<br>如果问题解决的够多了，你就不(ke)用(yi)加(hui)班(jia)了。<br>开源项目存在问题在所难免，作为程序员，解决问题应该和吃饭喝水一样平常。一些技巧例如看log看源代码善用搜索引擎，想必不用多言。</p>
+<h4 id="更多">更多</h4><p>在使用一个开源框架一段时间之后，对其有大概的理解，就可以尝试阅读其源代码，学习大神的思路了。如果有不错的想法，也可以给该项目提交贡献。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://pheynix.github.io/2016/02/22/014_use_open_source_project/" data-id="cil576la50002pfgmozerm50i" class="article-share-link">Share</a>
+      
+        <a href="http://pheynix.github.io/2016/02/22/014_use_open_source_project/#ds-thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/2015/">2015</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/learning/">learning</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mp/">mp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/open/">open</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/summary/">summary</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-013_userconfig" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      
+	
+		<a href="/2016/02/12/013_userconfig/" itemprop="url"><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/userconfig/banner_children.jpeg" class="article-banner"></a>
+	
+
+
+
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/02/12/013_userconfig/">利用UserConfig单例加快数据读取速度</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2016/02/12/013_userconfig/">
+      <time datetime="2016-02-12T13:24:10.000Z" itemprop="datePublished">2016-02-12</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>在程序运行的过程中，经常要查询使用当前用户的相关信息，例如用户的权限等级、标示用户需要的Token、ID、名字等。这些信息一般来说保存在SharePreferences中。为了加快这些信息的读取速度，可以在APP启动的时候加载到UserConfig类中，作为静态变量，伴随着APP的生命周期。</p>
+<h3 id="用法">用法</h3><h5 id="定义UserConfig类">定义UserConfig类</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class UserConfig &#123;&#10;    public static final String USER_CONFIG = &#34;user_config&#34;;&#10;&#10;    public static final String ID = &#34;id&#34;;&#10;    public static final String PHONE = &#34;phone&#34;;&#10;    public static final String NAME = &#34;name&#34;;&#10;    public static final String POSITION = &#34;position&#34;;&#10;    public static final String USER_ID = &#34;user_id&#34;;&#10;    public static final String COMPANY_ID = &#34;company_id&#34;;&#10;    public static final String ACCESS_TOKEN = &#34;access_token&#34;;&#10;    public static final String REFRESH_TOKEN = &#34;refresh_token&#34;;&#10;    public static final String IS_LOGIN = &#34;is_login&#34;;&#10;&#10;    private static UserConfig instance;&#10;&#10;    private int id = -1;&#10;    private String phone = &#34;&#34;;&#10;    private String name = &#34;&#34;;&#10;    private String position = &#34;&#34;;&#10;    private int userId = -1;&#10;    private int companyId = -1;&#10;    private String accessToken = &#34;&#34;;&#10;    private String refreshToken = &#34;&#34;;&#10;    private boolean isLogin = false;&#10;&#10;    /**&#10;     * &#21333;&#20363;&#27169;&#24335;&#10;     */&#10;    public static UserConfig getInstance() &#123;&#10;        if (instance == null) &#123;&#10;            synchronized (UserConfig.class) &#123;&#10;                if (instance == null) &#123;&#10;                    instance = new UserConfig();&#10;                &#125;&#10;            &#125;&#10;        &#125;&#10;        return instance;&#10;    &#125;&#10;&#10;    /**&#10;     * &#23454;&#20363;&#21270;&#26102;&#21152;&#36733;&#25968;&#25454;&#10;     */&#10;    private UserConfig() &#123;&#10;        SharedPreferences preferences = getSharedPreferences();&#10;        id = preferences.getInt(ID, -1);&#10;        phone = preferences.getString(PHONE, &#34;&#34;);&#10;        name = preferences.getString(NAME, &#34;&#34;);&#10;        position = preferences.getString(POSITION, &#34;&#34;);&#10;        userId = preferences.getInt(USER_ID, -1);&#10;        companyId = preferences.getInt(COMPANY_ID, -1);&#10;        accessToken = preferences.getString(ACCESS_TOKEN, &#34;&#34;);&#10;        refreshToken = preferences.getString(REFRESH_TOKEN, &#34;&#34;);&#10;        isLogin = preferences.getBoolean(IS_LOGIN, false);&#10;    &#125;&#10;&#10;    &#10;    /**&#10;     * &#22312;&#24688;&#24403;&#30340;&#26102;&#20505;&#21047;&#26032;&#25968;&#25454;&#65292;&#21487;&#20197;&#32771;&#34385;&#35774;&#32622;&#25104;&#26377;&#21442;&#25968;&#27169;&#24335;&#65292;&#25351;&#23450;&#38656;&#35201;&#37325;&#26032;&#21152;&#36733;&#30340;&#31181;&#31867;&#10;     * &#22914;&#26524;&#26377;&#26356;&#26032;&#65292;&#20351;&#29992;RxBus&#21457;&#36865;&#26356;&#26032;&#20107;&#20214;&#10;     */&#10;    public void reload() &#123;&#10;        SharedPreferences preferences = getSharedPreferences();&#10;&#10;        boolean isLoginNew = preferences.getBoolean(IS_LOGIN, false);&#10;        if (isLogin != isLoginNew) &#123;&#10;            isLogin = isLoginNew;&#10;            sendEvent(IS_LOGIN);&#10;        &#125;&#10;&#10;        String accessTokenNew = preferences.getString(ACCESS_TOKEN, &#34;&#34;);&#10;        if (!accessToken.equals(accessTokenNew)) &#123;&#10;            accessToken = accessTokenNew;&#10;            sendEvent(ACCESS_TOKEN);&#10;        &#125;&#10;&#10;        String refreshTokenNew = preferences.getString(REFRESH_TOKEN, &#34;&#34;);&#10;        if (!refreshToken.equals(refreshTokenNew)) &#123;&#10;            refreshToken = refreshTokenNew;&#10;            sendEvent(REFRESH_TOKEN);&#10;        &#125;&#10;&#10;&#10;        if (isLogin) &#123;&#10;            MpServiceFactory.getMpService().getProfile(accessToken, new retrofit.Callback&#60;Contact&#62;() &#123;&#10;                @Override&#10;                public void success(Contact contact, retrofit.client.Response response) &#123;&#10;                    if (id != contact.getId()) &#123;&#10;                        id = contact.getId();&#10;                        sendEvent(ID);&#10;                    &#125;&#10;                    if (!phone.equals(contact.getPhone())) &#123;&#10;                        phone = contact.getPhone();&#10;                        if (phone == null) phone = &#34;&#34;;&#10;                        sendEvent(PHONE);&#10;                    &#125;&#10;                    if (!name.equals(contact.getName())) &#123;&#10;                        name = contact.getName();&#10;                        if (name == null) name = &#34;&#34;;&#10;                        sendEvent(NAME);&#10;                    &#125;&#10;                    if (!position.equals(contact.getPosition())) &#123;&#10;                        position = contact.getPosition();&#10;                        if (position == null) position = &#34;&#34;;&#10;                        sendEvent(POSITION);&#10;                    &#125;&#10;                    if (userId != contact.getUserId()) &#123;&#10;                        userId = contact.getUserId();&#10;                        sendEvent(USER_ID);&#10;                    &#125;&#10;                    if (companyId != contact.getCompanyId()) &#123;&#10;                        companyId = contact.getCompanyId();&#10;                        sendEvent(COMPANY_ID);&#10;                    &#125;&#10;&#10;                &#125;&#10;&#10;                @Override&#10;                public void failure(RetrofitError error) &#123;&#10;                    RetrofitHandler.handleError(error);&#10;                &#125;&#10;            &#125;);&#10;        &#125;&#10;    &#125;&#10;&#10;&#10;    public void clear() &#123;&#10;        getEditor().clear().apply();&#10;        id = -1;&#10;        phone = &#34;&#34;;&#10;        name = &#34;&#34;;&#10;        position = &#34;&#34;;&#10;        userId = -1;&#10;        companyId = -1;&#10;        accessToken = &#34;&#34;;&#10;        refreshToken = &#34;&#34;;&#10;        isLogin = false;&#10;    &#125;&#10;&#10;    public void save() &#123;&#10;        getEditor()&#10;                .putInt(ID, id)&#10;                .putString(PHONE, phone)&#10;                .putString(NAME, name)&#10;                .putString(POSITION, position)&#10;                .putInt(USER_ID, userId)&#10;                .putInt(COMPANY_ID, companyId)&#10;                .putString(ACCESS_TOKEN, accessToken)&#10;                .putString(REFRESH_TOKEN, refreshToken)&#10;                .apply();&#10;    &#125;&#10;&#10;&#10;    private void sendEvent(String type) &#123;&#10;        RxBus.getBus().send(new UserConfigUpdatedEvent(type));&#10;    &#125;&#10;&#10;&#10;    private SharedPreferences getSharedPreferences() &#123;&#10;        return App.mContext.getSharedPreferences(USER_CONFIG, Context.MODE_PRIVATE);&#10;    &#125;&#10;&#10;    private SharedPreferences.Editor getEditor() &#123;&#10;        return getSharedPreferences().edit();&#10;    &#125;&#10;&#10;&#10;    public void setId(int id) &#123;&#10;        if (this.id == id) return;&#10;        this.id = id;&#10;        getEditor().putInt(ID, id).apply();&#10;        sendEvent(ID);&#10;    &#125;&#10;&#10;    public void setPhone(String phone) &#123;&#10;        if (this.phone.equals(phone)) return;&#10;        this.phone = phone;&#10;        if (this.phone == null) this.phone = &#34;&#34;;&#10;        getEditor().putString(PHONE, phone).apply();&#10;        sendEvent(PHONE);&#10;    &#125;&#10;&#10;    public void setName(String name) &#123;&#10;        if (this.name.equals(name)) return;&#10;        this.name = name;&#10;        if (this.name == null) this.name = &#34;&#34;;&#10;        getEditor().putString(NAME, name).apply();&#10;        sendEvent(NAME);&#10;    &#125;&#10;&#10;    public void setPosition(String position) &#123;&#10;        if (this.position.equals(position)) return;&#10;        this.position = position;&#10;        if (this.position == null) this.position = &#34;&#34;;&#10;        getEditor().putString(POSITION, position).apply();&#10;        sendEvent(POSITION);&#10;    &#125;&#10;&#10;    public void setUserId(int userId) &#123;&#10;        if (this.userId == userId) return;&#10;        this.userId = userId;&#10;        getEditor().putInt(USER_ID, userId).apply();&#10;        sendEvent(USER_ID);&#10;    &#125;&#10;&#10;    public void setCompanyId(int companyId) &#123;&#10;        if (this.companyId == companyId) return;&#10;        this.companyId = companyId;&#10;        getEditor().putInt(COMPANY_ID, companyId).apply();&#10;        sendEvent(COMPANY_ID);&#10;    &#125;&#10;&#10;&#10;    public void setAccessToken(String accessToken) &#123;&#10;        if (this.accessToken.equals(accessToken)) return;&#10;        this.accessToken = accessToken;&#10;        if (this.accessToken == null) this.accessToken = &#34;&#34;;&#10;        getEditor().putString(ACCESS_TOKEN, accessToken).apply();&#10;        sendEvent(ACCESS_TOKEN);&#10;    &#125;&#10;&#10;&#10;    public void setRefreshToken(String refreshToken) &#123;&#10;        if (this.refreshToken.equals(refreshToken)) return;&#10;        this.refreshToken = refreshToken;&#10;        if (this.refreshToken == null) this.refreshToken = &#34;&#34;;&#10;        getEditor().putString(REFRESH_TOKEN, refreshToken).apply();&#10;        sendEvent(REFRESH_TOKEN);&#10;    &#125;&#10;&#10;    public void setIsLogin(boolean isLogin) &#123;&#10;        if (this.isLogin == isLogin) return;&#10;        this.isLogin = isLogin;&#10;        getEditor().putBoolean(IS_LOGIN, isLogin).apply();&#10;        sendEvent(IS_LOGIN);&#10;    &#125;&#10;&#10;    public int getId() &#123;&#10;        return id;&#10;    &#125;&#10;&#10;    public String getPhone() &#123;&#10;        return phone;&#10;    &#125;&#10;&#10;    public String getName() &#123;&#10;        return name;&#10;    &#125;&#10;&#10;    public String getPosition() &#123;&#10;        return position;&#10;    &#125;&#10;&#10;    public int getUserId() &#123;&#10;        return userId;&#10;    &#125;&#10;&#10;    public int getCompanyId() &#123;&#10;        return companyId;&#10;    &#125;&#10;&#10;&#10;    public String getAccessToken() &#123;&#10;        return accessToken;&#10;    &#125;&#10;&#10;&#10;    public String getRefreshToken() &#123;&#10;        return refreshToken;&#10;    &#125;&#10;&#10;    public boolean isLogin() &#123;&#10;        return isLogin;&#10;    &#125;&#10;&#10;    public static class UserConfigUpdatedEvent &#123;&#10;        private String type = &#34;&#34;;&#10;&#10;        public UserConfigUpdatedEvent(String type) &#123;&#10;            this.type = type;&#10;        &#125;&#10;&#10;        public String getType() &#123;&#10;            return type;&#10;        &#125;&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="在代码中使用">在代码中使用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RequestInterceptor requestInterceptor = new RequestInterceptor() &#123;  &#10;    @Override&#10;    public void intercept(RequestFacade request) &#123;&#10;        request.addHeader(&#34;Authorization&#34;, UserConfig.accessToken);&#10;        request.addHeader(&#34;Content-Type&#34;, &#34;application/json&#34;);&#10;    &#125;&#10;&#125;;&#10;&#10;RestAdapter restAdapter = new RestAdapter.Builder()  &#10;    .setEndpoint(Globle.endPoint)&#10;    .setRequestInterceptor(requestInterceptor)&#10;    .build();</span><br></pre></td></tr></table></figure>
+<p>由于是单例模式，在第一次创建的时候会加载所有数据，简单使用。这样一个不高深但实用的工具类编写完了。</p>
+<h5 id="优化">优化</h5><p>在reload()方法中，可以考虑使用位运算的方法判断需要重新加载类型。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public static final int TYPE_A = 1; //&#20108;&#36827;&#21046;00001&#10;public static final int TYPE_B = 2; //&#20108;&#36827;&#21046;00010&#10;public static final int TYPE_C = 4; //&#20108;&#36827;&#21046;00100&#10;public static final int TYPE_D = 8; //&#20108;&#36827;&#21046;01000&#10;public static final int TYPE_E = 16;//&#20108;&#36827;&#21046;10000&#10;public static final int TYPE_ALL = TYPE_A | TYPE_B | TYPE_C | TYPE_D | TYPE_E;//&#20108;&#36827;&#21046;11111&#10;&#10;public void reload(int type)&#123;&#10;    if ((type &#38; TYPE_A) != 0)&#123;&#10;        //&#37325;&#26032;&#21152;&#36733;A&#31867;&#22411;&#10;    &#125;&#10;&#10;    if ((type &#38; TYPE_B) != 0)&#123;&#10;        //&#37325;&#26032;&#21152;&#36733;B&#31867;&#22411;&#10;    &#125;&#10;&#10;    if ((type &#38; TYPE_C) != 0)&#123;&#10;        //&#37325;&#26032;&#21152;&#36733;C&#31867;&#22411;&#10;    &#125;&#10;&#10;    if ((type &#38; TYPE_D) != 0)&#123;&#10;        //&#37325;&#26032;&#21152;&#36733;D&#31867;&#22411;&#10;    &#125;&#10;&#10;    if ((type &#38; TYPE_E) != 0)&#123;&#10;        //&#37325;&#26032;&#21152;&#36733;E&#31867;&#22411;&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://pheynix.github.io/2016/02/12/013_userconfig/" data-id="cil576lag000epfgm315wufqb" class="article-share-link">Share</a>
+      
+        <a href="http://pheynix.github.io/2016/02/12/013_userconfig/#ds-thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-012_sharepreference_util" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      
+	
+		<a href="/2016/01/28/012_sharepreference_util/" itemprop="url"><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/sp_util/banner_firework.jpeg" class="article-banner"></a>
+	
+
+
+
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/28/012_sharepreference_util/">定义工具类减少项目的重复代码</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2016/01/28/012_sharepreference_util/">
+      <time datetime="2016-01-28T13:24:10.000Z" itemprop="datePublished">2016-01-28</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>根据<a href="http://c2.com/cgi/wiki?ThreeStrikesAndYouRefactor" target="_blank" rel="external">三振法</a>, </p>
+<blockquote>
+<ul>
+<li>The first time you do something, you just do it.</li>
+<li>The second time you do something similar, you wince at the duplication, but you do the duplicate thing anyway.</li>
+<li><p>The third time you do something similar, you refactor.</p>
+</li>
+<li><p>某件事第一次做的时候不需要考虑</p>
+</li>
+<li>第二次做的时候，或许不喜欢复制的方式，不过也没有太大的问题</li>
+<li>第三次做的时候，就需要考虑重构了</li>
+</ul>
+</blockquote>
+<p>如果发现某段代码被复制了2次，那么就可以重构成工具类，方便日后的使用。<br>在开发Android应用的过程中，普遍需要编写一些工具类例如：与文件有关的<code>FileUtil</code> 、与日期相关的<code>DateUtils</code>；Android系统提供的<code>TextUtil</code>和<code>AnimationUtils</code>等<br>经常需要使用的SharePreferences用于保存键值对，利用工具类可以减少获取Editor/SharedPreferences对象的重复代码。</p>
+<h2 id="使用">使用</h2><h5 id="定义工具类">定义工具类</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class SPUtil &#123;&#10;    public static final String SP_NAME = &#34;sp_name&#34;;&#10;&#10;    /**&#10;     * &#20445;&#23384;&#25968;&#25454;&#21040;SharedPreferences&#10;     */&#10;    public static void put(String key, Object value) &#123;&#10;        isKeyNull(key);&#10;        SharedPreferences.Editor editor = getEditor();&#10;&#10;        if (value instanceof String) &#123;&#10;            editor.putString(key, (String) value);&#10;        &#125; else if (value instanceof Integer) &#123;&#10;            editor.putInt(key, (Integer) value);&#10;        &#125; else if (value instanceof Boolean) &#123;&#10;            editor.putBoolean(key, (Boolean) value);&#10;        &#125; else if (value instanceof Float) &#123;&#10;            editor.putFloat(key, (Float) value);&#10;        &#125; else if (value instanceof Long) &#123;&#10;            editor.putLong(key, (Long) value);&#10;        &#125; else &#123;&#10;            editor.putString(key, value.toString());&#10;        &#125;&#10;&#10;        editor.apply();&#10;    &#125;&#10;&#10;    /**&#10;     * &#33719;&#21462;SharedPreferences&#30340;&#25968;&#25454;&#10;     */&#10;    @Nullable&#10;    public static Object get(@NonNull String key, @Nullable Object defaultValue) &#123;&#10;        isKeyNull(key);&#10;        SharedPreferences sp = App.context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);&#10;&#10;        if (defaultValue instanceof String) &#123;&#10;            return sp.getString(key, (String) defaultValue);&#10;        &#125; else if (defaultValue instanceof Integer) &#123;&#10;            return sp.getInt(key, (Integer) defaultValue);&#10;        &#125; else if (defaultValue instanceof Boolean) &#123;&#10;            return sp.getBoolean(key, (Boolean) defaultValue);&#10;        &#125; else if (defaultValue instanceof Float) &#123;&#10;            return sp.getFloat(key, (Float) defaultValue);&#10;        &#125; else if (defaultValue instanceof Long) &#123;&#10;            return sp.getLong(key, (Long) defaultValue);&#10;        &#125;&#10;&#10;        return defaultValue;&#10;    &#125;&#10;&#10;    /**&#10;     * &#31227;&#38500;key&#23545;&#24212;&#30340;&#20540;&#10;     */&#10;    public static void remove(Context context, String key) &#123;&#10;        isKeyNull(key);&#10;        getEditor().remove(key).apply();&#10;    &#125;&#10;&#10;    /**&#10;     * &#28165;&#38500;&#25152;&#26377;&#25968;&#25454;&#10;     */&#10;    public static void clear(Context context) &#123;&#10;        getEditor().clear().apply();&#10;    &#125;&#10;&#10;    private static SharedPreferences.Editor getEditor() &#123;&#10;        return App.context&#10;                .getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)&#10;                .edit();&#10;    &#125;&#10;&#10;    private static void isKeyNull(String key)&#123;&#10;        if (TextUtils.isEmpty(key)) throw new IllegalArgumentException(&#34;&#38190;&#19981;&#33021;&#20026;null&#34;);&#10;    &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="在代码中使用">在代码中使用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Override public void onCreate() &#123;&#10;        super.onCreate();&#10;        String something = SPUtil.get(&#34;key&#34;, &#34;value&#34;);&#10;        SPUtil.put(&#34;key&#34;, &#34;something else&#34;);&#10;    &#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://pheynix.github.io/2016/01/28/012_sharepreference_util/" data-id="cil576lap000hpfgmxln8mrca" class="article-share-link">Share</a>
+      
+        <a href="http://pheynix.github.io/2016/01/28/012_sharepreference_util/#ds-thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-011_java_comment" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      
+	
+		<a href="/2016/01/21/011_java_comment/" itemprop="url"><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/java_comment/banner_coastal.jpeg" class="article-banner"></a>
+	
+
+
+
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/21/011_java_comment/">Java注释基础用法</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2016/01/21/011_java_comment/">
+      <time datetime="2016-01-21T13:24:10.000Z" itemprop="datePublished">2016-01-21</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>Java支持三种类型的注释， 两种会被JavaDoc忽略掉，分别是<code>/* some comment here */</code>和<code>// some comment here</code>；第三种注释叫<strong><code>doc comment</code></strong>，用于生成文档：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/**&#10;  * &#23558;&#20004;&#20010;&#25968;&#30456;&#21152;&#10;  *&#10;  * @param first &#31532;&#19968;&#20010;&#25968;&#10;  * @param second &#31532;&#20108;&#20010;&#25968;&#10;  * @return &#30456;&#21152;&#20043;&#21644;&#10;  * @since 2016-01-16&#10;  * @author yourName@gmail.com&#10;  */&#10;  public int add(int first, int second)&#123;&#10;      return first + second;&#10;  &#125;</span><br></pre></td></tr></table></figure>
+<p>常用的说明注释标签</p>
 <table>
 <thead>
 <tr>
-<th>status</th>
-<th style="text-align:center">fromDegrees</th>
-<th style="text-align:right">toDegrees</th>
-<th style="text-align:right">rotation</th>
-<th style="text-align:right">description</th>
+<th>标签</th>
+<th style="text-align:center">描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>打开－原</td>
-<td style="text-align:center">0</td>
-<td style="text-align:right">45</td>
-<td style="text-align:right">45</td>
-<td style="text-align:right">动画从0转到45，然后将ImageView的rotation设置为45</td>
+<td>@author authorName</td>
+<td style="text-align:center">类的作者</td>
 </tr>
 <tr>
-<td>打开－新</td>
-<td style="text-align:center">－45</td>
-<td style="text-align:right">0</td>
-<td style="text-align:right">45</td>
-<td style="text-align:right">将ImageView的rotation设置为45，然后动画从相对当前位置的-45转到0</td>
+<td>@deprecated</td>
+<td style="text-align:center">已弃用类</td>
 </tr>
 <tr>
-<td>关闭－原</td>
-<td style="text-align:center">0</td>
-<td style="text-align:right">－45</td>
-<td style="text-align:right">0</td>
-<td style="text-align:right">动画从0转到－45，然后将ImageView的rotation设置为0</td>
+<td>@param paramName description</td>
+<td style="text-align:center">参数</td>
 </tr>
 <tr>
-<td>关闭－新</td>
-<td style="text-align:center">45</td>
-<td style="text-align:right">0</td>
-<td style="text-align:right">0</td>
-<td style="text-align:right">将ImageView的rotation设置为0，然后动画从相对当前位置的45转到0</td>
+<td>@return valueName description</td>
+<td style="text-align:center">返回值</td>
+</tr>
+<tr>
+<td>@exception exceptionName description</td>
+<td style="text-align:center">抛出的异常</td>
+</tr>
+<tr>
+<td>@throws exceptionName description</td>
+<td style="text-align:center">抛出的异常</td>
+</tr>
+<tr>
+<td>{@link className}</td>
+<td style="text-align:center">链接到另一个类</td>
+</tr>
+<tr>
+<td>@see className</td>
+<td style="text-align:center">链接到另一个类</td>
+</tr>
+<tr>
+<td>@since date</td>
+<td style="text-align:center">发布日期</td>
+</tr>
+<tr>
+<td>{@inheritDoc}</td>
+<td style="text-align:center">继承父类注释</td>
 </tr>
 </tbody>
 </table>
-<p>最终能够得到正确的效果</p>
-<p><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/animation_trouble/animation_perfect.gif" alt="正确的效果"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://pheynix.github.io/2016/01/10/android_rotation_trouble/" data-id="cij9yqzmc0000mbgmsyc9uv51" class="article-share-link">Share</a>
+      <a data-url="http://pheynix.github.io/2016/01/21/011_java_comment/" data-id="cil576lau000kpfgm91f17e4h" class="article-share-link">Share</a>
       
-        <a href="http://pheynix.github.io/2016/01/10/android_rotation_trouble/#ds-thread" class="article-comment-link">Comments</a>
+        <a href="http://pheynix.github.io/2016/01/21/011_java_comment/#ds-thread" class="article-comment-link">Comments</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/animation/">animation</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/trouble/">trouble</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/comment/">comment</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/skill/">skill</a></li></ul>
 
     </footer>
   </div>
@@ -238,12 +453,12 @@
 
 
     
-      <article id="post-jiandan_rxjava" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-008_basic_okhttp_usage" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       
 	
-		<a href="/2016/01/07/jiandan_rxjava/" itemprop="url"><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/jiandan_rxjava/house.jpg" class="article-banner"></a>
+		<a href="/2016/01/20/008_basic_okhttp_usage/" itemprop="url"><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/basic_okhttp/banner_night.jpeg" class="article-banner"></a>
 	
 
 
@@ -255,7 +470,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/07/jiandan_rxjava/">JiandanRxJava阅读收获</a>
+      <a class="article-title" href="/2016/01/20/008_basic_okhttp_usage/">OkHttp基本用法</a>
     </h1>
   
 
@@ -263,8 +478,8 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2016/01/07/jiandan_rxjava/">
-      <time datetime="2016-01-07T14:09:24.000Z" itemprop="datePublished">2016-01-07</time>
+    <a href="/2016/01/20/008_basic_okhttp_usage/">
+      <time datetime="2016-01-20T13:24:10.000Z" itemprop="datePublished">2016-01-20</time>
     </a>
   </div>
 
@@ -276,41 +491,92 @@
     <div class="article-entry" itemprop="articleBody">
       
                 
-        <ul>
-<li><p>如果需要防止外部实例化一个类，可以将构造函数设置为private，并且抛出异常</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private MenuAdapter()&#123;&#10;    throw new UnsupportedOperationException();&#10;&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>校验参数发现错误时抛出IllegalArgumentException，及早发现问题</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public MenuAdapter(Object object)&#123;&#10;    if(object == null)&#123;&#10;        throw new IllegalArgumentException();&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用JUnit等测试工具</p>
-</li>
-</ul>
+        <p>OkHttp是一个用于Andriod和Java的HTTP请求框架，可以很方便的发起请求和处理返回的数据。</p>
+<h2 id="用法">用法</h2><h5 id="建立单例">建立单例</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class OkFactory &#123;&#10;    private static OkHttpClient client = new OkHttpClient();&#10;&#10;    public static OkHttpClient getInstance() &#123;&#10;        return client;&#10;    &#125;&#10;&#10;    private OkFactory() &#123;&#10;        throw new UnsupportedOperationException();&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="发送GET请求">发送GET请求</h5><p>先生成Request对象，然后通过OkHttpClient发送，通过<code>enqueue</code>设置结果回调。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Request request = new Request.Builder().url(url).build();&#10;OkFactory.getInstance().newCall(request).enqueue(new Callback() &#123;&#10;    @Override public void onFailure(Request request, IOException e) &#123;&#10;        //handle exception here&#10;    &#125;&#10;&#10;    @Override public void onResponse(final Response response) throws IOException &#123;&#10;       String body = response.body().string();&#10;    &#125;&#10;&#125;);</span><br></pre></td></tr></table></figure>
+<h5 id="发送POST请求">发送POST请求</h5><p>同样，先生成Request，POST请求需要配置MediaType和RequestBody，剩下的GET请求相同。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MediaType mediaTypeJson = MediaType.parse(&#34;application/json; charset=utf-8&#34;);&#10;RequestBody requestBody = RequestBody.create(mediaTypeJson, body);&#10;Request request = new Request.Builder().url(url).post(requestBody).build();&#10;&#10;&#10;OkFactory.getInstance().newCall(request).enqueue(new Callback() &#123;&#10;    @Override public void onFailure(Request request, IOException e) &#123;&#10;        //handle exception here&#10;    &#125;&#10;&#10;    @Override public void onResponse(Response response) throws IOException &#123;&#10;        String result = response.body().string();&#10;    &#125;&#10;&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="更多">更多</h2><p>PATCH请求和DELETE请求和上述步骤大同小异。<br>很多时候请求需要在Header中加入token做用户身份认证，只需要在Reques对象的builder中设置即可。</p>
 <ul>
-<li>如果需要在外部调用Activity内部的方法，最好的方法是，定义一个接口，外部调用这个接口，保证解耦合<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public interface someInterface &#123;&#10;    void doSomething();&#10;&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<li><a href="https://github.com/square/okhttp/wiki" target="_blank" rel="external">wiki</a></li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public MainActivity extends BaseActivity implements someInterface&#123;&#10;    void doSomething()&#123;&#10;     ...&#10;    &#125;&#10;&#10;    someObject.setListener(this);&#10;&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public SomeObject &#123;&#10;    someListener.doSomething();&#10;&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://pheynix.github.io/2016/01/20/008_basic_okhttp_usage/" data-id="cil576lb90011pfgmw5bmm0xb" class="article-share-link">Share</a>
+      
+        <a href="http://pheynix.github.io/2016/01/20/008_basic_okhttp_usage/#ds-thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-009_basic_retrofit_usage" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      
+	
+		<a href="/2016/01/20/009_basic_retrofit_usage/" itemprop="url"><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/basic_retrofit/banner_ocean.jpeg" class="article-banner"></a>
+	
+
+
+
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/20/009_basic_retrofit_usage/">Retrofit基础用法</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2016/01/20/009_basic_retrofit_usage/">
+      <time datetime="2016-01-20T13:24:10.000Z" itemprop="datePublished">2016-01-20</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>Retrofit是来自Square的一个HTTP请求框架，基于OkHttp支持RxJava，具备函数式编程的特性，符合RESTful的要求，本文基于1.9.0。</p>
+<h2 id="用法">用法</h2><h5 id="新建Interface定义Api信息">新建Interface定义Api信息</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public interface GitHubApi &#123;&#10;    @GET(&#34;/users/&#123;userName&#125;&#34;)&#10;    Observable&#60;User&#62; getUser(@Path(&#34;userName&#34;) String userName);&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>在这里使用Annotation的方式说明HTTP Request的类型，Retrofit支持的Http类型包括GET/POST/PATCH/DELETE。<br>可以在添加方法参数并添加@Query注解加入params。<br>返回的数据将会被转换成User的对象并作为Observable使用。</p>
+<h5 id="新建GitHubService-class并配置RestAdapter和OkHttpClient">新建GitHubService.class并配置RestAdapter和OkHttpClient</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class GitHubService &#123;&#10;    private static final String END_POINT = &#34;https://api.github.com&#34;;&#10;&#10;    private GitHubApi gitHubApi;&#10;&#10;    public GitHubService() &#123;&#10;        OkHttpClient okHttpClient = new OkHttpClient();&#10;        okHttpClient.setReadTimeout(15 * 1000, TimeUnit.MILLISECONDS);&#10;        okHttpClient.setWriteTimeout(15 * 1000, TimeUnit.MILLISECONDS);&#10;        okHttpClient.setConnectTimeout(15 * 1000, TimeUnit.MILLISECONDS);&#10;        &#10;        RequestInterceptor requestInterceptor = new RequestInterceptor() &#123;&#10;            @Override&#10;            public void intercept(RequestInterceptor.RequestFacade request) &#123;&#10;                request.addHeader(&#34;Content-Type&#34;, &#34;application/json&#34;);&#10;                request.addHeader(&#34;Authorization&#34;, UserConfig.accessToken);&#10;            &#125;&#10;        &#125;;&#10;&#10;        RestAdapter restAdapter = new RestAdapter.Builder()&#10;                .setClient(new OkClient(okHttpClient))&#10;                .setEndpoint(END_POINT)&#10;                .setConverter(new GsonConverter(new Gson()))&#10;                .setLogLevel(RestAdapter.LogLevel.FULL)&#10;                .setLog(new RestAdapter.Log() &#123;&#10;                    @Override&#10;                    public void log(String msg) &#123;&#10;                        Log.d(&#34;Retrofit&#34;, msg);&#10;                    &#125;&#10;                &#125;)&#10;                .build();&#10;        gitHubApi = restAdapter.create(GitHubApi.class);&#10;    &#125;&#10;&#10;    public GitHubApi getGitHubApi()&#123;&#10;        return gitHubApi;&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>Retrofit基于OkHttp，所以在OkHttpClient设置超时数值。<br>在项目中，普遍存在使用token验证用户身份的需求，这时候可以添加RequestInterceptor统一加入header信息。<br>END_POINT之类的信息交由RestAdapter来设置，最好能够设置Log，这样调试过程可以看到请求的信息。</p>
+<h5 id="建立单例">建立单例</h5><p>设置单例模式使得整个项目中只有一个实例，减少实例重复重建需要消耗的资源。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class GitHubServiceFactory &#123;&#10;    static GitHubApi gitHubApi = null;&#10;    &#10;    public static GitHubApi getGitHubService() &#123;&#10;        if (gitHubApi == null) &#123;&#10;            synchronized (GitHubApi.class) &#123;&#10;                if (gitHubApi == null) &#123;&#10;                    gitHubApi = new GitHubService().getGitHubApi();&#10;                &#125;&#10;            &#125;&#10;        &#125;&#10;        return gitHubApi;&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="在代码中调用">在代码中调用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Override&#10;protected void onCreate(Bundle savedInstanceState) &#123;&#10;    super.onCreate(savedInstanceState);&#10;    setContentView(R.layout.activity_main);&#10;    &#10;    GitHubServiceFactory.getGitHubService().getUser(&#34;pheynix&#34;)&#10;            .observeOn(AndroidSchedulers.mainThread())&#10;            .subscribe(new Observer&#60;User&#62;() &#123;&#10;                @Override public void onCompleted() &#123;&#10;                    &#10;                &#125;&#10;&#10;                @Override public void onError(Throwable e) &#123;&#10;&#10;                &#125;&#10;&#10;                @Override public void onNext(User user) &#123;&#10;&#10;                &#125;&#10;            &#125;);&#10;            &#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>##更多<br>Retrofit的基本用法如上，需要详细的说明可以查看</p>
 <ul>
-<li><p>在Application的onCreate中做一些的初始化的工作</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class JDApplication extends Application&#123;&#10;    @Override&#10;    public void onCreate() &#123;&#10;        super.onCreate();&#10;        doSomething();&#10;        doOther();&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用PreferenceFragment搭建Setting页</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class SettingFragment extends PreferenceFragment &#123;&#10;    @Override&#10;    public void onCreate(Bundle savedInstanceState) &#123;&#10;        super.onCreate(savedInstanceState);&#10;        addPreferencesFromResource(R.xml.preferences);&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<li><a href="http://square.github.io/retrofit/" target="_blank" rel="external">http://square.github.io/retrofit/</a></li>
+<li><a href="https://bng86.gitbooks.io/android-third-party-/content/retrofit.html" target="_blank" rel="external">https://bng86.gitbooks.io/android-third-party-/content/retrofit.html</a></li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://pheynix.github.io/2016/01/07/jiandan_rxjava/" data-id="cij9yqzng0004mbgmeiekjx4g" class="article-share-link">Share</a>
+      <a data-url="http://pheynix.github.io/2016/01/20/009_basic_retrofit_usage/" data-id="cil576lb6000ypfgmiezpr1j8" class="article-share-link">Share</a>
       
-        <a href="http://pheynix.github.io/2016/01/07/jiandan_rxjava/#ds-thread" class="article-comment-link">Comments</a>
+        <a href="http://pheynix.github.io/2016/01/20/009_basic_retrofit_usage/#ds-thread" class="article-comment-link">Comments</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Exception/">Exception</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JUnit/">JUnit</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RxJava/">RxJava</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reading/">reading</a></li></ul>
-
     </footer>
   </div>
   
@@ -319,275 +585,9 @@
 
 
     
-      <article id="post-telegram" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/11/telegram/">Telegram阅读笔记（1）</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/12/11/telegram/">
-      <time datetime="2015-12-11T14:33:08.000Z" itemprop="datePublished">2015-12-11</time>
-    </a>
-  </div>
-
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p>这个项目来自github，是一个怎么样的项目。。。</p>
-<p>部分代码摘除自源代码中</p>
-<p>理解错误请谅解</p>
-<h4 id="1_在SDK&gt;=21中设置控件的状态效果">1 在SDK&gt;=21中设置控件的状态效果</h4><p>可以直接用代码设置控件的状态效果，需要用到<code>StateListAnimator</code> <code>ObjectAnimator</code>，所得到的效果其实和新建一个selector.xml然后设置<item>是一样的。</item></p>
-<p><code>andriod.R.</code>里面不仅仅有android预置的attr(state)，还有color/dimension等，尽量使用系统预置的属性</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if (Build.VERSION.SDK_INT &#62;= 21) &#123;&#10;&#9;StateListAnimator stateListAnimator = new StateListAnimator();&#10;&#9;stateListAnimator.addState(new int[]&#123;android.R.attr.state_pressed&#125;, &#10;&#9;&#9;ObjectAnimator.ofFloat(button, &#34;translationZ&#34;, 2, 10).setDuration(100));&#10;&#9;stateListAnimator.addState(new int[]&#123;&#125;,&#10;&#9;&#9;ObjectAnimator.ofFloat(button, &#34;translationZ&#34;, 2).setDuration(100));&#10;&#9;button.setStateListAnimator(stateListAnimator);&#10;&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="2">2</h4>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://pheynix.github.io/2015/12/11/telegram/" data-id="cij6kd077000b4fgmdnu9l9lh" class="article-share-link">Share</a>
-      
-        <a href="http://pheynix.github.io/2015/12/11/telegram/#ds-thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/note/">note</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reading/">reading</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-zhihu_daily_purify" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      
-	
-		<a href="/2015/12/07/zhihu_daily_purify/" itemprop="url"><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/purify_zhihu/purify_banner.jpeg" class="article-banner"></a>
-	
-
-
-
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/07/zhihu_daily_purify/">ZhihuDailyPurify阅读收获</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/12/07/zhihu_daily_purify/">
-      <time datetime="2015-12-07T14:09:24.000Z" itemprop="datePublished">2015-12-07</time>
-    </a>
-  </div>
-
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><a href="https://github.com/izzyleung/ZhihuDailyPurify" target="_blank" rel="external">ZhihuDailyPurify</a>是一款纯净的知乎日报第三份客户端，快速看了一遍代码，几个收获做一下笔记。</p>
-<h4 id="1_用到的控件定义一个统一的style">1 用到的控件定义一个统一的style</h4><p>定义一个统一的style有两个好处：</p>
-<ul>
-<li>应用风格统一</li>
-<li>不用复制粘贴了</li>
-</ul>
-<p>可以放一些基础的属性，例如外层ViewGroup一般都是两个<code>match_parent</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;style name=&#34;Base&#34;&#62;&#10;   &#9; &#60;item name=&#34;android:layout_width&#34;&#62;match_parent&#60;/item&#62;&#10;    &#9;&#60;item name=&#34;android:layout_height&#34;&#62;match_parent&#60;/item&#62;&#10;&#60;/style&#62;</span><br></pre></td></tr></table></figure>
-<p> 也可以针对某种控件定义统一的样式，例如button</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;style name=&#34;tabLayoutStyle&#34; parent=&#34;Widget.Design.TabLayout&#34;&#62;&#10;    &#60;item name=&#34;android:layout_width&#34;&#62;match_parent&#60;/item&#62;&#10;    &#60;item name=&#34;android:layout_height&#34;&#62;wrap_content&#60;/item&#62;&#10;    &#60;item name=&#34;android:theme&#34;&#62;@style/ThemeOverlay.AppCompat.Dark&#60;/item&#62;&#10;    &#60;item name=&#34;tabBackground&#34;&#62;?attr/colorPrimary&#60;/item&#62;&#10;    &#60;item name=&#34;tabIndicatorColor&#34;&#62;@android:color/white&#60;/item&#62;&#10;    &#60;item name=&#34;tabMode&#34;&#62;scrollable&#60;/item&#62;&#10;&#60;/style&#62;</span><br></pre></td></tr></table></figure>
-<h4 id="2_使用PreferenceFragment生成设置属性页面">2 使用PreferenceFragment生成设置属性页面</h4><p>新建<code>Fragment extends PreferenceFragment</code>, 然后新建在res文件夹下面新建xml文件夹，在其中新建这个fragment的布局文件。</p>
-<p>布局文件内部可以放<code>PreferenceCategory</code> <code>CheckBoxPreference</code> <code>ListPreference</code> <code>EditTextPreference</code> 这些view，非常方便可以生成Preference页面，<a href="http://developer.android.com/reference/android/preference/PreferenceFragment.html" target="_blank" rel="external">文档</a>非常详细～</p>
-<p><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/purify_zhihu/purify_prefs.png" alt="demo"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://pheynix.github.io/2015/12/07/zhihu_daily_purify/" data-id="cij9yqzn90001mbgmfqmeuwok" class="article-share-link">Share</a>
-      
-        <a href="http://pheynix.github.io/2015/12/07/zhihu_daily_purify/#ds-thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reading/">reading</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-deploy_hexo" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      
-	
-		<a href="/2015/12/06/deploy_hexo/" itemprop="url"><img src="https://raw.githubusercontent.com/pheynix/pheynix.github.io/master/css/images/asset/deploy_hexo/pic_autumn_leaf.jpeg" class="article-banner"></a>
-	
-
-
-
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/06/deploy_hexo/">使用Hexo部署博客</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/12/06/deploy_hexo/">
-      <time datetime="2015-12-05T17:52:30.000Z" itemprop="datePublished">2015-12-06</time>
-    </a>
-  </div>
-
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><a href="hexo.io">Hexo</a>是一个静态博客框架，可以使用MarkDown写作然后方便地生成静态博客，<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">部署的方式</a>在官方其实已经很详细，网上也有很有详细的教程，这里主要记录一下部署过程遇到的坑。</p>
-<h4 id="1_Error:_Deployer_not_found_:_git">1 Error: Deployer not found : git</h4><p>执行<code>$ hexo deploy</code> 遇到<code>Error: Deployer not found : git</code>的错误，原因是没有安装deployer插件。</p>
-<p>先执行<code>rm -rf .deploy_git</code>移除该插件现有的安装，然后<code>npm install hexo-deployer-git --save</code>安装插件。</p>
-<p>记得修改<code>_config.yml</code>文件的<code>deploy:</code>部分为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deploy:&#10;  type: git&#10;  message: [message]&#10;  repo:&#10;    github: &#60;repository_url&#62;,[branch]&#10;    gitcafe: &#60;repository_url&#62;,[branch]</span><br></pre></td></tr></table></figure></p>
-<h4 id="2_部署到github后无法加载css和js">2 部署到github后无法加载css和js</h4><p>路径错误，在<code>_config.yml</code>中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url: http://pheynix.github.io&#10;root: /hexo-theme-icarus/&#10;permalink: :year/:month/:day/:title/&#10;permalink_defaults:</span><br></pre></td></tr></table></figure></p>
-<p>将<code>root: /hexo-theme-icarus/</code>改成<code>/</code>后加载正常。这个博客使用的是<a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="external">hexo-theme-icarus</a>，修改后本地使用<code>$ hexo server</code>启动本地服务器<code>0.0.0.0:4000</code>无法连接，问题未解决，只能在启动本地服务器之前将<code>root</code>还原….</p>
-<h4 id="3_MODULE_NOT_FOUND">3 MODULE_NOT_FOUND</h4><p>执行<code>$ hexo generate</code>时出现的错误<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; [Error: Cannot find module &#39;./build/Release/DTraceProviderBindings&#39;] code: &#39;MODULE_NOT_FOUND&#39; &#125;&#10;&#123; [Error: Cannot find module &#39;./build/default/DTraceProviderBindings&#39;] code: &#39;MODULE_NOT_FOUND&#39; &#125;&#10;&#123; [Error: Cannot find module &#39;./build/Debug/DTraceProviderBindings&#39;] code: &#39;MODULE_NOT_FOUND&#39; &#125;</span><br></pre></td></tr></table></figure></p>
-<p>使用<code>npm install hexo --no-optional</code>更新Hexo解决</p>
-<p>虽然不少坑，但是也不错啦，有个博客，可以记录一下了。之前写的东西比较水，就不放在新的博客了。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://pheynix.github.io/2015/12/06/deploy_hexo/" data-id="cij9yqzni000ambgm4getqa5t" class="article-share-link">Share</a>
-      
-        <a href="http://pheynix.github.io/2015/12/06/deploy_hexo/#ds-thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/original/">original</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/trouble/">trouble</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-coding_path" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      
-	
-		<a href="/2015/10/01/coding_path/" itemprop="url"><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/coding_path/climb.jpeg" class="article-banner"></a>
-	
-
-
-
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/01/coding_path/">编程之路</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/10/01/coding_path/">
-      <time datetime="2015-09-30T19:00:43.000Z" itemprop="datePublished">2015-10-01</time>
-    </a>
-  </div>
-
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p>从7月21开始投简历找工作，面试了sugr/glassx/avatar/趣创/迅雷看看/小象快跑/beva/plusmoney等等，还有误进几个黑心的培训机构！见过各种奇葩的公司，各种装逼的，办公室还在装修的！最后在福田找到了现在工作的plusmoney，终于实现了转行的梦想，顺带着也把在CBD上班的(很久之前的)愿望也实现了。面试plusmoney的时间是9月8号，然后9号就开始签合同上班了。</p>
-<p>说起来，2014年第四季度的时候，思前想后，先后做了两个自认为非常重要的决定，第一个是报考项目管理专业人士认证，第二个是转行做安卓应用开发的工作。之所以会有这样的决定，原因在于，我想跳出制造业这个行业。从2013年9月，按照专业的安排，开始到企业实习整整一个大四（当然很多人中途回学校找工作了）。对一个学渣来说，能够找到像海信这样的企业，算是很不错的工作了，多少比我优秀的同学没能通过实习面试。恰好遇到一个非常会打交道的部长和一个非常懂工业工程的主管，磕磕碰碰，实习一整年然后在海信留了下来，接着又工作到2015年的6月3日。依然非常清晰记得，实习转正答辩的那个会议上面，工艺部的技术大神志哥对我的评价是“有理想缺胆识”。</p>
-<p>其实我觉得他只说对了一半，后来他自己也间接承认。</p>
-<p>我觉得每个人都有理想，可能是“修身齐家治国平天下”也可能只是简单的想朝九晚五下午了舒舒服服做个饭散个步，可能是走遍世界看各种神奇也可能是在家养养鸟种种花。无论是什么，都值得尊重。我也有理想，我想要见识更大的世界，想学习优秀的人是怎么做事，想做一些我能非常有自豪感的事情。在海信转正答辩的时候我还没有想清楚要怎么去做这些事情。所以，离开海信是铁定的事情了，只不过是早晚的差别，取决于我什么时候想清楚下一步怎么走。</p>
-<p>而勇气，我想我从来不缺，或者可以称得上是盲目乐观吧。</p>
-<p>既然要离开制造业，那就要想去处了。首先选行业吧。Google了行业大全、看招聘网站的行业分类，大类小类，感兴趣的都看了一遍，最后几乎没有太大的犹豫，我选择了向移动互联网发展。</p>
-<p>那下一步就是想要在移动互联网做什么事情了。正好海信在推项目管理的理念，对于工业工程的学生来说，从事项目管理也算走的是本专业的道路，所以报考了项目管理专业人士认证，平时的工作也尝试用项目管理的理念去实践。</p>
-<p>从初中接触到电脑开始，我就非常喜欢这个东西，不只是玩玩游戏，我倒是挺喜欢用电脑去实现一些东西。后来各种原因吧，没有再在这个爱好上面投入精力，这估计是活到现在我最为后悔的事情之一了。在备考认证的过程中，接触了一些人，发现无论是海信，还是IT行业，技术永远是放在非常重要的位置，备受瞩目，前/钱途光明。我想，既然要换工作换行业，为什么不直接去做自己喜欢做的事情呢？</p>
-<p>转行IT过程必定非常艰难，那又如何呢？艰难至少比呆在制造业更有趣吧！</p>
-<p>2014年的第四季度开始了一边备考pmp一遍复习java的过程，一直到2015年3月份，pmp考完，下班时间基本都投在准备转行了，直到6月份，我裸辞了。</p>
-<p>海信这个企业，对员工还是非常宽容的，至少，不会轻易的辞退办公室人员，所以，几个朋友知道我要裸辞，都劝我骑驴找马。我也不是圣母，也担心经济压力，只不过辞了有更多的时间放在学习上面，况且彼时我已经没太大兴趣去做精益生产的事情了。</p>
-<p>走吧走吧，船到桥头自然直！</p>
-<p>离开海信的日期是2015年的6月3日。离开之后，便开始了泡图书馆的日子。吃饭、学习、睡觉，日子过得真的比在海信的清闲生活苦不知道多少倍。虽然大学有自学过java，但是基本都是浅尝辄止，算得上是0.8个编程白痴，这一路还是独行，遇到问题有时候都不知道要怎么下手去觉得，只能慢慢地在网络胡乱搜索一通，有时候碰巧搜索关键字对了，问题得到解决，大多时候都是没办法去解决。万幸的是，我坚持下来了。</p>
-<p>只不过，另一个问题来了。</p>
-<p>我的父母并非大富大贵见多识广的人物，知道我裸辞之后，每天必做的一件事就是打电话催我找工作，或许在老一辈的人认知中“失业”等于“饿死”吧。所以我没再敢把转行的事情告诉他们。</p>
-<p>这段时期，一方面顶着学习的压力，一方面顶着父母的压力，也很担心存款用尽了还没有找到工作怎么办。我想，在这段日子里面，唯一支撑我的，就是丰满的理想吧。</p>
-<p>到了2015年7月20日，跌跌撞撞，自己做完了一个小作品，就开始投简历了，开始了找工作之旅。面试-&gt;补不足-&gt;面试-&gt;补不足，找找停停。一直到9月9日找到工作，面试的工作10份左右吧，给offer的有两家，一家非常不靠谱的没敢去，剩下的一家就是现在的plusmoney了。作为一个野生程序猿，其实已经有受鄙视的心理准备了，非常意外，技术面的大多数面试官，都非常的友好，面试过后还给了我不少的建议。有一次大胆去了迅雷看看面试，还结识了一个师兄，给我的帮助不可谓不多！</p>
-<p>到9月10日开始上班，虽然报酬不高，甚至低于在海信的报酬，但是非常开心，终于可以靠Android App Developing养活自己了。在这里，我加入了一个app小组，后端服务器是一个乌克兰小伙，一个项目经理负责需求分析和业务逻辑，ios端有一个同事，还有android端就是我了。其实我有点忧虑吧，毕竟，这是我第一次参与商用级项目开发，组内没有其他android的队友可以讨论一下！向迅雷看看的那位师兄请教，结合他的看法和我自己的感觉，觉得可以干下去，那就干吧！</p>
-<p>对比年初定的计划，第一季度把pmp拿到手，第二三季度转行，都已经实现了，接下来就是第四季度了。原定第四季度的目标是拿一个英语方面的认证，当然认证不是主要的目标，如pmp一样，只不过是通过认证，逼着自己去努力罢了。英语很重要，不可能绕得开，尽管如此，我想目前有更加重要的事情要去做。</p>
-<p>第四季度，首先要把技术练好，具体的做法是找到优秀的开源项目，彻底分析它的代码，吸收优秀的编程技巧和习惯，应用到公司的项目。然后就是java、算法和数据结构。今天看到一个说法：“小丑鸭之所以能够变成白天鹅，原因在于它的父母就是天鹅”。如果只是把应用做出来，表面看起来没有太大问题了，但是很多基本的类似“项目结构、效率、原理”，才是“鸭”和“天鹅”的区别吧。要做到这一点，天鹅的基因是关键。虽然我不是科班出身，但是这些东西不一定是要科班才能学到。</p>
-<p>此外，能偶尔学学英语，读读大神的博客，写写自己的博客，第四季度就非常满意了。</p>
-<p>Long Live The Adventure.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://pheynix.github.io/2015/10/01/coding_path/" data-id="cij9yqznk000dmbgmeua3wm3x" class="article-share-link">Share</a>
-      
-        <a href="http://pheynix.github.io/2015/10/01/coding_path/#ds-thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/footprint/">footprint</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
+      <nav id="page-nav">
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      </nav>
     </section>
       
         <aside id="sidebar">
@@ -601,85 +601,85 @@
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2016/01/10/android_rotation_trouble/" class="thumbnail">
+              <a href="/2016/02/22/014_use_open_source_project/" class="thumbnail">
   
-    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/animation_trouble/The.Martian.2015.png)" alt="Android旋转动画闪烁问题" class="thumbnail-image"></span>
+    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/open_source/banner_clothes.jpeg)" alt="怎么选择使用开源项目" class="thumbnail-image"></span>
   
 </a>
             </div>
             
             <div class="item-inner">
               <p class="item-category"></p>
-              <p class="item-title"><a href="/2016/01/10/android_rotation_trouble/" class="title">Android旋转动画闪烁问题</a></p>
-              <p class="item-date"><time datetime="2016-01-10T13:24:10.000Z" itemprop="datePublished">2016-01-10</time></p>
+              <p class="item-title"><a href="/2016/02/22/014_use_open_source_project/" class="title">怎么选择使用开源项目</a></p>
+              <p class="item-date"><time datetime="2016-02-22T13:24:10.000Z" itemprop="datePublished">2016-02-22</time></p>
             </div>
           </li>
         
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2016/01/07/jiandan_rxjava/" class="thumbnail">
+              <a href="/2016/02/12/013_userconfig/" class="thumbnail">
   
-    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/jiandan_rxjava/house.jpg)" alt="JiandanRxJava阅读收获" class="thumbnail-image"></span>
+    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/userconfig/banner_children.jpeg)" alt="利用UserConfig单例加快数据读取速度" class="thumbnail-image"></span>
   
 </a>
             </div>
             
             <div class="item-inner">
               <p class="item-category"></p>
-              <p class="item-title"><a href="/2016/01/07/jiandan_rxjava/" class="title">JiandanRxJava阅读收获</a></p>
-              <p class="item-date"><time datetime="2016-01-07T14:09:24.000Z" itemprop="datePublished">2016-01-07</time></p>
+              <p class="item-title"><a href="/2016/02/12/013_userconfig/" class="title">利用UserConfig单例加快数据读取速度</a></p>
+              <p class="item-date"><time datetime="2016-02-12T13:24:10.000Z" itemprop="datePublished">2016-02-12</time></p>
             </div>
           </li>
         
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2015/12/11/telegram/" class="thumbnail">
+              <a href="/2016/01/28/012_sharepreference_util/" class="thumbnail">
   
-    <span class="thumbnail-image thumbnail-none"></span>
+    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/sp_util/banner_firework.jpeg)" alt="定义工具类减少项目的重复代码" class="thumbnail-image"></span>
   
 </a>
             </div>
             
             <div class="item-inner">
               <p class="item-category"></p>
-              <p class="item-title"><a href="/2015/12/11/telegram/" class="title">Telegram阅读笔记（1）</a></p>
-              <p class="item-date"><time datetime="2015-12-11T14:33:08.000Z" itemprop="datePublished">2015-12-11</time></p>
+              <p class="item-title"><a href="/2016/01/28/012_sharepreference_util/" class="title">定义工具类减少项目的重复代码</a></p>
+              <p class="item-date"><time datetime="2016-01-28T13:24:10.000Z" itemprop="datePublished">2016-01-28</time></p>
             </div>
           </li>
         
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2015/12/07/zhihu_daily_purify/" class="thumbnail">
+              <a href="/2016/01/21/011_java_comment/" class="thumbnail">
   
-    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/purify_zhihu/purify_banner.jpeg)" alt="ZhihuDailyPurify阅读收获" class="thumbnail-image"></span>
+    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/java_comment/banner_coastal.jpeg)" alt="Java注释基础用法" class="thumbnail-image"></span>
   
 </a>
             </div>
             
             <div class="item-inner">
               <p class="item-category"></p>
-              <p class="item-title"><a href="/2015/12/07/zhihu_daily_purify/" class="title">ZhihuDailyPurify阅读收获</a></p>
-              <p class="item-date"><time datetime="2015-12-07T14:09:24.000Z" itemprop="datePublished">2015-12-07</time></p>
+              <p class="item-title"><a href="/2016/01/21/011_java_comment/" class="title">Java注释基础用法</a></p>
+              <p class="item-date"><time datetime="2016-01-21T13:24:10.000Z" itemprop="datePublished">2016-01-21</time></p>
             </div>
           </li>
         
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2015/12/06/deploy_hexo/" class="thumbnail">
+              <a href="/2016/01/20/008_basic_okhttp_usage/" class="thumbnail">
   
-    <span style="background-image:url(https://raw.githubusercontent.com/pheynix/pheynix.github.io/master/css/images/asset/deploy_hexo/pic_autumn_leaf.jpeg)" alt="使用Hexo部署博客" class="thumbnail-image"></span>
+    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/basic_okhttp/banner_night.jpeg)" alt="OkHttp基本用法" class="thumbnail-image"></span>
   
 </a>
             </div>
             
             <div class="item-inner">
               <p class="item-category"></p>
-              <p class="item-title"><a href="/2015/12/06/deploy_hexo/" class="title">使用Hexo部署博客</a></p>
-              <p class="item-date"><time datetime="2015-12-05T17:52:30.000Z" itemprop="datePublished">2015-12-06</time></p>
+              <p class="item-title"><a href="/2016/01/20/008_basic_okhttp_usage/" class="title">OkHttp基本用法</a></p>
+              <p class="item-date"><time datetime="2016-01-20T13:24:10.000Z" itemprop="datePublished">2016-01-20</time></p>
             </div>
           </li>
         
@@ -694,7 +694,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Exception/">Exception</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JUnit/">JUnit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RxJava/">RxJava</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/animation/">animation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/footprint/">footprint</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/note/">note</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/original/">original</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reading/">reading</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/trouble/">trouble</a><span class="tag-list-count">2</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/2015/">2015</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Exception/">Exception</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JUnit/">JUnit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RxJava/">RxJava</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/animation/">animation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/comment/">comment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/footprint/">footprint</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/learning/">learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mp/">mp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/open/">open</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/original/">original</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/plaid/">plaid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reading/">reading</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skill/">skill</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/summary/">summary</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/trouble/">trouble</a><span class="tag-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -703,7 +703,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">tag cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Exception/" style="font-size: 10px;">Exception</a> <a href="/tags/JUnit/" style="font-size: 10px;">JUnit</a> <a href="/tags/RxJava/" style="font-size: 10px;">RxJava</a> <a href="/tags/android/" style="font-size: 20px;">android</a> <a href="/tags/animation/" style="font-size: 10px;">animation</a> <a href="/tags/footprint/" style="font-size: 10px;">footprint</a> <a href="/tags/note/" style="font-size: 10px;">note</a> <a href="/tags/original/" style="font-size: 10px;">original</a> <a href="/tags/reading/" style="font-size: 16.67px;">reading</a> <a href="/tags/trouble/" style="font-size: 13.33px;">trouble</a>
+      <a href="/tags/2015/" style="font-size: 10px;">2015</a> <a href="/tags/Exception/" style="font-size: 10px;">Exception</a> <a href="/tags/JUnit/" style="font-size: 10px;">JUnit</a> <a href="/tags/RxJava/" style="font-size: 10px;">RxJava</a> <a href="/tags/android/" style="font-size: 20px;">android</a> <a href="/tags/animation/" style="font-size: 10px;">animation</a> <a href="/tags/comment/" style="font-size: 10px;">comment</a> <a href="/tags/footprint/" style="font-size: 10px;">footprint</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/learning/" style="font-size: 10px;">learning</a> <a href="/tags/mp/" style="font-size: 10px;">mp</a> <a href="/tags/open/" style="font-size: 10px;">open</a> <a href="/tags/original/" style="font-size: 10px;">original</a> <a href="/tags/plaid/" style="font-size: 10px;">plaid</a> <a href="/tags/reading/" style="font-size: 16.67px;">reading</a> <a href="/tags/skill/" style="font-size: 13.33px;">skill</a> <a href="/tags/summary/" style="font-size: 10px;">summary</a> <a href="/tags/trouble/" style="font-size: 13.33px;">trouble</a>
     </div>
   </div>
 
@@ -712,7 +712,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
