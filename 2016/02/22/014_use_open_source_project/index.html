@@ -24,7 +24,7 @@ OkHTTP
 Volley
 android-async-">
 <meta property="og:image" content="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/open_source/mport_module.png">
-<meta property="og:updated_time" content="2016-02-27T14:04:57.000Z">
+<meta property="og:updated_time" content="2016-02-27T14:21:36.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="怎么选择使用开源项目">
 <meta name="twitter:description" content="很多时候，限于项目进度要求和避免重复造轮子的浪费，或多或少会使用到开源项目，怎么快速挑选、使用恰当的开源项目很大程度影响项目日后的开发。
@@ -207,7 +207,7 @@ android-async-">
 <p>对于第三中导入项目源文件作为module的方法，稍微复杂一些，但是带来的优点是可以按照项目需求修改导入的开源框架的代码，拥有更大的主动权。<br>以HeadsUp项目为例，使用<code>git clone https://github.com/zzz40500/HeadsUp.git</code>将项目克隆到本地之后，依次选择File -&gt; New -&gt; Import module，然后选择想要导入的library即可。<br>然后根据项目需求，做一些修改即可。<br><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/open_source/mport_module.png" alt="File-&gt;New-&gt;Import_module"></p>
 <p>三种引入方式都会在Gradle.build文件中生成一句代码</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;&#10;    compile fileTree(include: [&#39;*.jar&#39;], dir: &#39;libs&#39;)&#10;    compile &#39;com.squareup.retrofit2:retrofit:2.0.0-beta3&#39;&#10;    compile files(&#39;libs/lite-orm-1.7.0.jar&#39;)&#10;    compile project(&#39;:library_ImagePicker&#39;)&#10;&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="解决使用过程中遇到得问题">解决使用过程中遇到得问题</h4><p>很喜欢<a href="http://www.imdb.com/title/tt3659388/" target="_blank" rel="external">The Martian</a>中的一段话：</p>
+<h4 id="解决使用过程中遇到的问题">解决使用过程中遇到的问题</h4><p>很喜欢<a href="http://www.imdb.com/title/tt3659388/" target="_blank" rel="external">The Martian</a>中的一段话：</p>
 <blockquote>
 <p>At some point, everything’s going to go south on you.<br>Everything’s going to go south and you’re going to say “This is it.”<br>That is how I end.<br>Now you can either accept that<br>or you can get to work.<br>That’s all it is.<br>You just begin.<br>You do the math. You solve one problem<br>and you solve the next one,<br>and then the next.<br>And If you solve enough problems, you get to come home.</p>
 </blockquote>
