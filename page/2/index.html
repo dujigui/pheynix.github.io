@@ -124,6 +124,73 @@
 
       
       <section id="main">
+      <article id="post-008_basic_okhttp_usage" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      
+	
+		<a href="/2016/01/20/008_basic_okhttp_usage/" itemprop="url"><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/basic_okhttp/banner_night.jpeg" class="article-banner"></a>
+	
+
+
+
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/20/008_basic_okhttp_usage/">OkHttp基本用法</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2016/01/20/008_basic_okhttp_usage/">
+      <time datetime="2016-01-20T13:24:10.000Z" itemprop="datePublished">2016-01-20</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>OkHttp是一个用于Andriod和Java的HTTP请求框架，可以很方便的发起请求和处理返回的数据。</p>
+<h2 id="用法">用法</h2><h5 id="建立单例">建立单例</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class OkFactory &#123;&#10;    private static OkHttpClient client = new OkHttpClient();&#10;&#10;    public static OkHttpClient getInstance() &#123;&#10;        return client;&#10;    &#125;&#10;&#10;    private OkFactory() &#123;&#10;        throw new UnsupportedOperationException();&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="发送GET请求">发送GET请求</h5><p>先生成Request对象，然后通过OkHttpClient发送，通过<code>enqueue</code>设置结果回调。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Request request = new Request.Builder().url(url).build();&#10;OkFactory.getInstance().newCall(request).enqueue(new Callback() &#123;&#10;    @Override public void onFailure(Request request, IOException e) &#123;&#10;        //handle exception here&#10;    &#125;&#10;&#10;    @Override public void onResponse(final Response response) throws IOException &#123;&#10;       String body = response.body().string();&#10;    &#125;&#10;&#125;);</span><br></pre></td></tr></table></figure>
+<h5 id="发送POST请求">发送POST请求</h5><p>同样，先生成Request，POST请求需要配置MediaType和RequestBody，剩下的GET请求相同。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MediaType mediaTypeJson = MediaType.parse(&#34;application/json; charset=utf-8&#34;);&#10;RequestBody requestBody = RequestBody.create(mediaTypeJson, body);&#10;Request request = new Request.Builder().url(url).post(requestBody).build();&#10;&#10;&#10;OkFactory.getInstance().newCall(request).enqueue(new Callback() &#123;&#10;    @Override public void onFailure(Request request, IOException e) &#123;&#10;        //handle exception here&#10;    &#125;&#10;&#10;    @Override public void onResponse(Response response) throws IOException &#123;&#10;        String result = response.body().string();&#10;    &#125;&#10;&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="更多">更多</h2><p>PATCH请求和DELETE请求和上述步骤大同小异。<br>很多时候请求需要在Header中加入token做用户身份认证，只需要在Reques对象的builder中设置即可。</p>
+<ul>
+<li><a href="https://github.com/square/okhttp/wiki" target="_blank" rel="external">wiki</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://pheynix.github.io/2016/01/20/008_basic_okhttp_usage/" data-id="cil576lb90011pfgmw5bmm0xb" class="article-share-link">Share</a>
+      
+        <a href="http://pheynix.github.io/2016/01/20/008_basic_okhttp_usage/#ds-thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mp/">mp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/network/">network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/okhttp/">okhttp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/summary/">summary</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
       <article id="post-010_plaid" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -385,90 +452,6 @@
 
 
     
-      <article id="post-006_mp_index" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      
-	
-		<a href="/2016/01/09/006_mp_index/" itemprop="url"><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/mp_index/banner_books.jpeg" class="article-banner"></a>
-	
-
-
-
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/09/006_mp_index/">MP实现技术总结</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2016/01/09/006_mp_index/">
-      <time datetime="2016-01-09T13:24:10.000Z" itemprop="datePublished">2016-01-09</time>
-    </a>
-  </div>
-
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p>MP是一个OA（办公自动化）APP，包括任务管理、联系人、审批、CRM等功能点，主要面对的是企业管理。整个项目所用到的东西普通实用，这里主要总结一下整个项目用到的这些Android开发的经验。<strong>所有文章在个人时间完成，所有的代码展示并非项目源代码，而是根据需要重新编写。</strong></p>
-<p><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/mp_index/structure.jpeg" alt="mp_structure"></p>
-<p>在这个项目中，网络访问使用<a href="https://github.com/square/retrofit" target="_blank" rel="external">Retrofit</a>和<a href="https://github.com/square/okhttp" target="_blank" rel="external">OkHttp</a>，图片加载选择<a href="https://github.com/square/picasso" target="_blank" rel="external">Picasso</a>。<br>数据请求回来之后，本地使用<a href="https://github.com/litesuits/android-lite-orm" target="_blank" rel="external">LiteOrm</a>操作数据库，辅以SharePreferences保存键值对数据，然后将恰当的向上传递。</p>
-<p>为了简化代码和加快开发数据，使用了<a href="https://github.com/JakeWharton/butterknife" target="_blank" rel="external">ButterKnife</a>完成View的绑定和<a href="https://github.com/hongyangAndroid/AndroidAutoLayout" target="_blank" rel="external">AndroidAutoLayout</a>解决屏幕适配的问题。</p>
-<p>一般来说，Activity/Fragment之间传递数据使用setArgument()/setResult()或者回调接口的方法，然而我们可以使用事件总线<a href="http://hanhailong.com/2015/10/09/RxBus%E2%80%94%E9%80%9A%E8%BF%87RxJava%E6%9D%A5%E6%9B%BF%E6%8D%A2EventBus/" target="_blank" rel="external">RxBus</a>的办法，简化整个传递过程并且可以获得更大的灵活性。</p>
-<p>APP运行过程中经常要用到当前用户的数据，例如token、用户账号信息以及是否已登录等等，与其每次使用都到SharePreferences中读取，还不如在启动的时候加载到应用中，通常的做法是建立UserConfig单例在运行期间持有这些信息。具体的使用可以看<a href="www.userconfig.com">Userconfig使用</a>或者看DrKLO大神的表演<a href="https://github.com/DrKLO/Telegram/blob/master/TMessagesProj%2Fsrc%2Fmain%2Fjava%2Forg%2Ftelegram%2Fmessenger%2FUserConfig.java" target="_blank" rel="external">Telegram UserConfig</a></p>
-<p>很多时候我们需要在应用启动的时候做一些初始化的工作，可以选择继承Application类，<a href="www.application.com">在这个类中初始化项目要用到的liteOrm等等</a>。</p>
-<p>目前比较流行的网络请求框架有OkHttp/Retrofit、android-async-http、volley等，在这个项目选用的是第一个，可以很方便地分离主线程和网络线程，并且使用函数式编程，如果只做简单的网络请求，一些<a href="www.okhttp.com">OkHttp</a>/<a href="www.Retrofit">Retrofit</a>的基本用法已经可以满足需求。</p>
-<p>数据取回来之后，需要进行保存，一些简单的数据可以保存在SharePreferences中，对于很多项目，都需要一些<a href="www.utils.com">工具类</a>，减少重复的代码。对于更大更复杂的数据，就需要用到数据库了，可以直接上DataBaseHepler，或者偷懒用ORM。对于Orm，目前流行的可以实用GreenDAO和liteOrm，在ManagerPlus中选用的是LiteOrm。</p>
-<p>使用LiteOrm的时候，最好能够继承Application并且在子类中创建LiteOrm单例，这样就可以在整个项目范围方便地访问数据库了。具体使用可以看：</p>
-<ul>
-<li><a href="https://github.com/litesuits/android-lite-orm" target="_blank" rel="external">LiteOrm：Android高性能数据库框架</a></li>
-<li><a href="http://blog.csdn.net/napoleonbai/article/details/41958725" target="_blank" rel="external">使用案例1</a></li>
-<li><a href="http://www.apkbus.com/ask/article/13859" target="_blank" rel="external">使用案例2</a></li>
-</ul>
-<p>在程序运行的过程中，不同的Activity/Fragment之间需要交换数据，可以使用EventBus或者RxBus.<br>既然我们的项目中已经有RxJava了，就可以使用一个简单的单例类实现RxBus，具体方法可以看<a href="http://hanhailong.com/2015/10/09/RxBus%E2%80%94%E9%80%9A%E8%BF%87RxJava%E6%9D%A5%E6%9B%BF%E6%8D%A2EventBus/" target="_blank" rel="external">RxBus—通过RxJava来替换EventBus</a></p>
-<p>创业公司很大程度要求快速开发，难免使用流行可靠的开源项目，自然对员工的快速学习能力有很高的要求。怎么[挑选、使用开源项目](www.opensource.com]对项目今后的发展有很大程度的影响。</p>
-<p>项目使用的IDE是Android Studio，相对于Eclipse来说，提供很多贴心的功能。每天的Tips of Today都会带来不一样的惊喜！<br><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/mp_index/tips_of_today.png" alt="tips_of_today">。这里有很多可以提高开发效率的小技巧<a href="http://laobie.github.io/android/2016/02/14/android-studio-tips.html" target="_blank" rel="external">Android Studio Tip</a></p>
-<p>对于软件项目来说，版本管理必不可少，Git是一个很好的选择。<br>Git可以直接使用terminal命令，也可以用sourceTree等<a href="https://git-scm.com/download/gui/mac" target="_blank" rel="external">一些GUI 客户端</a>。Git基础的一些操作可以在这里找到<a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">中文教程</a>。</p>
-<p>Git中的一个重要的概念就是分支，分支可以帮助我们将新特性、漏洞修复、发布和主分支区别开来，在团队合作中，遵循<a href="http://nvie.com/posts/a-successful-git-branching-model/" target="_blank" rel="external">普遍的分支模型</a>可以减少很多沟通成本。合并的时候如果出现冲突，建议使用Android Studio的solve conflict功能（osx的快捷键ctrl+c）。<br><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/mp_index/resolve_conflicts_1.png" alt="solve_conflict_1"><br><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/mp_index/resolve_conflicts_2.png" alt="solve_conflict_2"></p>
-<p>在调试API接口的时候，我们可以使用<a href="http://www.getpostman.com/" target="_blank" rel="external">Postman</a>这款Chrome插件，如果是osx还能使用客户端，非常方便。<br><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/mp_index/postman.png" alt="postman"></p>
-<p>很喜欢火星救援里面的一段话</p>
-<blockquote>
-<p>At some point, everything’s going to go south on you.<br>Everything’s going to go south and you’re going to say “This is it.”<br>That is how I end.<br>Now you can either accept that<br>or you can get to work.<br>That’s all it is.<br>You just begin.<br>You do the math. You solve one problem<br>and you solve the next one,<br>and then the next.<br>And If you solve enough problems, you get to come home.</p>
-</blockquote>
-<p>You solve one problem, and you solve the next one,and then the next.<br>作为一个代码仔，没有problem的代码是最高的追求，同时problem是在所难免的，一个合格的代码仔，应该有不怕问题的态度，不局限于实现，更应该追求完美的代码。</p>
-<p>相比于大神们的高质量博文，我这些文章真的不值一提，甚至有时候我自己都在质疑是否有必要坚持写完，写完会不会有人看。不过始终记得下决定要纪录下这些经验的初衷：好好总结自己在加号财富6个月里面学到的东西。所以，即使知道自己的文字很无聊，也坚持完成了最初的计划。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://pheynix.github.io/2016/01/09/006_mp_index/" data-id="cil576lbf0018pfgmupyp9vh7" class="article-share-link">Share</a>
-      
-        <a href="http://pheynix.github.io/2016/01/09/006_mp_index/#ds-thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/index/">index</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mp/">mp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/summary/">summary</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
       <article id="post-004_jiandan_rxjava" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -636,6 +619,23 @@
           <li>
             
             <div class="item-thumbnail">
+              <a href="/2016/02/29/006_mp_index/" class="thumbnail">
+  
+    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/mp_index/banner_books.jpeg)" alt="MP实现技术总结" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/02/29/006_mp_index/" class="title">MP实现技术总结</a></p>
+              <p class="item-date"><time datetime="2016-02-29T13:24:10.000Z" itemprop="datePublished">2016-02-29</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
               <a href="/2016/02/22/014_use_open_source_project/" class="thumbnail">
   
     <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/open_source/banner_clothes.jpeg)" alt="怎么选择使用开源项目" class="thumbnail-image"></span>
@@ -701,23 +701,6 @@
             </div>
           </li>
         
-          <li>
-            
-            <div class="item-thumbnail">
-              <a href="/2016/01/20/008_basic_okhttp_usage/" class="thumbnail">
-  
-    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/basic_okhttp/banner_night.jpeg)" alt="OkHttp基本用法" class="thumbnail-image"></span>
-  
-</a>
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category"></p>
-              <p class="item-title"><a href="/2016/01/20/008_basic_okhttp_usage/" class="title">OkHttp基本用法</a></p>
-              <p class="item-date"><time datetime="2016-01-20T13:24:10.000Z" itemprop="datePublished">2016-01-20</time></p>
-            </div>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -747,7 +730,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
