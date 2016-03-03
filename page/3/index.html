@@ -97,7 +97,7 @@
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
-        14
+        15
         <span>posts</span>
       </div>
       <div class="article-info-block">
@@ -124,6 +124,76 @@
 
       
       <section id="main">
+      <article id="post-003_zhihu_daily_purify" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      
+	
+		<a href="/2015/12/07/003_zhihu_daily_purify/" itemprop="url"><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/purify_zhihu/purify_banner.jpeg" class="article-banner"></a>
+	
+
+
+
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/07/003_zhihu_daily_purify/">ZhihuDailyPurify阅读收获</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/12/07/003_zhihu_daily_purify/">
+      <time datetime="2015-12-07T14:09:24.000Z" itemprop="datePublished">2015-12-07</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><a href="https://github.com/izzyleung/ZhihuDailyPurify" target="_blank" rel="external">ZhihuDailyPurify</a>是一款纯净的知乎日报第三份客户端，快速看了一遍代码，几个收获做一下笔记。</p>
+<h4 id="1_用到的控件定义一个统一的style">1 用到的控件定义一个统一的style</h4><p>定义一个统一的style有两个好处：</p>
+<ul>
+<li>应用风格统一</li>
+<li>不用复制粘贴了</li>
+</ul>
+<p>可以放一些基础的属性，例如外层ViewGroup一般都是两个<code>match_parent</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;style name=&#34;Base&#34;&#62;&#10;   &#9; &#60;item name=&#34;android:layout_width&#34;&#62;match_parent&#60;/item&#62;&#10;    &#9;&#60;item name=&#34;android:layout_height&#34;&#62;match_parent&#60;/item&#62;&#10;&#60;/style&#62;</span><br></pre></td></tr></table></figure>
+<p> 也可以针对某种控件定义统一的样式，例如button</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;style name=&#34;tabLayoutStyle&#34; parent=&#34;Widget.Design.TabLayout&#34;&#62;&#10;    &#60;item name=&#34;android:layout_width&#34;&#62;match_parent&#60;/item&#62;&#10;    &#60;item name=&#34;android:layout_height&#34;&#62;wrap_content&#60;/item&#62;&#10;    &#60;item name=&#34;android:theme&#34;&#62;@style/ThemeOverlay.AppCompat.Dark&#60;/item&#62;&#10;    &#60;item name=&#34;tabBackground&#34;&#62;?attr/colorPrimary&#60;/item&#62;&#10;    &#60;item name=&#34;tabIndicatorColor&#34;&#62;@android:color/white&#60;/item&#62;&#10;    &#60;item name=&#34;tabMode&#34;&#62;scrollable&#60;/item&#62;&#10;&#60;/style&#62;</span><br></pre></td></tr></table></figure>
+<h4 id="2_使用PreferenceFragment生成设置属性页面">2 使用PreferenceFragment生成设置属性页面</h4><p>新建<code>Fragment extends PreferenceFragment</code>, 然后新建在res文件夹下面新建xml文件夹，在其中新建这个fragment的布局文件。</p>
+<p>布局文件内部可以放<code>PreferenceCategory</code> <code>CheckBoxPreference</code> <code>ListPreference</code> <code>EditTextPreference</code> 这些view，非常方便可以生成Preference页面，<a href="http://developer.android.com/reference/android/preference/PreferenceFragment.html" target="_blank" rel="external">文档</a>非常详细～</p>
+<p><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/purify_zhihu/purify_prefs.png" alt="demo"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://pheynix.github.io/2015/12/07/003_zhihu_daily_purify/" data-id="cil576lc0001lpfgm9ss2vdh4" class="article-share-link">Share</a>
+      
+        <a href="http://pheynix.github.io/2015/12/07/003_zhihu_daily_purify/#ds-thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reading/">reading</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
       <article id="post-002_deploy_hexo" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -302,6 +372,23 @@
           <li>
             
             <div class="item-thumbnail">
+              <a href="/2016/02/22/015_wechat_sdk_trouble/" class="thumbnail">
+  
+    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/wechat_sdk/banner_puppy.jpg)" alt="微信SDK使用过程问题" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/02/22/015_wechat_sdk_trouble/" class="title">微信SDK使用过程问题</a></p>
+              <p class="item-date"><time datetime="2016-02-22T13:24:10.000Z" itemprop="datePublished">2016-02-22</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
               <a href="/2016/02/22/014_use_open_source_project/" class="thumbnail">
   
     <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/open_source/banner_clothes.jpeg)" alt="怎么选择使用开源项目" class="thumbnail-image"></span>
@@ -350,23 +437,6 @@
             </div>
           </li>
         
-          <li>
-            
-            <div class="item-thumbnail">
-              <a href="/2016/01/21/011_java_comment/" class="thumbnail">
-  
-    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/java_comment/banner_coastal.jpeg)" alt="Java注释基础用法" class="thumbnail-image"></span>
-  
-</a>
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category"></p>
-              <p class="item-title"><a href="/2016/01/21/011_java_comment/" class="title">Java注释基础用法</a></p>
-              <p class="item-date"><time datetime="2016-01-21T13:24:10.000Z" itemprop="datePublished">2016-01-21</time></p>
-            </div>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -378,7 +448,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Exception/">Exception</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JUnit/">JUnit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RxJava/">RxJava</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/animation/">animation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/application/">application</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/comment/">comment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/footprint/">footprint</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/index/">index</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/learning/">learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mp/">mp</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/okhttp/">okhttp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/open/">open</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/original/">original</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/plaid/">plaid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reading/">reading</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/retrofit/">retrofit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skill/">skill</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/summary/">summary</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/trouble/">trouble</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/userconfig/">userconfig</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/utils/">utils</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Exception/">Exception</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JUnit/">JUnit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RxJava/">RxJava</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/animation/">animation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/application/">application</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/comment/">comment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/footprint/">footprint</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/index/">index</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/learning/">learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mp/">mp</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/okhttp/">okhttp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/open/">open</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/original/">original</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/plaid/">plaid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reading/">reading</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/retrofit/">retrofit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skill/">skill</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/summary/">summary</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/trouble/">trouble</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/userconfig/">userconfig</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/utils/">utils</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -387,7 +457,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">tag cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Exception/" style="font-size: 10px;">Exception</a> <a href="/tags/JUnit/" style="font-size: 10px;">JUnit</a> <a href="/tags/RxJava/" style="font-size: 10px;">RxJava</a> <a href="/tags/android/" style="font-size: 20px;">android</a> <a href="/tags/animation/" style="font-size: 10px;">animation</a> <a href="/tags/application/" style="font-size: 10px;">application</a> <a href="/tags/comment/" style="font-size: 10px;">comment</a> <a href="/tags/footprint/" style="font-size: 10px;">footprint</a> <a href="/tags/index/" style="font-size: 10px;">index</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/learning/" style="font-size: 10px;">learning</a> <a href="/tags/mp/" style="font-size: 17.5px;">mp</a> <a href="/tags/network/" style="font-size: 10px;">network</a> <a href="/tags/okhttp/" style="font-size: 10px;">okhttp</a> <a href="/tags/open/" style="font-size: 10px;">open</a> <a href="/tags/original/" style="font-size: 10px;">original</a> <a href="/tags/plaid/" style="font-size: 10px;">plaid</a> <a href="/tags/reading/" style="font-size: 15px;">reading</a> <a href="/tags/retrofit/" style="font-size: 10px;">retrofit</a> <a href="/tags/skill/" style="font-size: 12.5px;">skill</a> <a href="/tags/summary/" style="font-size: 17.5px;">summary</a> <a href="/tags/trouble/" style="font-size: 12.5px;">trouble</a> <a href="/tags/userconfig/" style="font-size: 10px;">userconfig</a> <a href="/tags/utils/" style="font-size: 10px;">utils</a>
+      <a href="/tags/Exception/" style="font-size: 10px;">Exception</a> <a href="/tags/JUnit/" style="font-size: 10px;">JUnit</a> <a href="/tags/RxJava/" style="font-size: 10px;">RxJava</a> <a href="/tags/android/" style="font-size: 20px;">android</a> <a href="/tags/animation/" style="font-size: 10px;">animation</a> <a href="/tags/application/" style="font-size: 10px;">application</a> <a href="/tags/comment/" style="font-size: 10px;">comment</a> <a href="/tags/footprint/" style="font-size: 10px;">footprint</a> <a href="/tags/index/" style="font-size: 10px;">index</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/learning/" style="font-size: 10px;">learning</a> <a href="/tags/mp/" style="font-size: 18px;">mp</a> <a href="/tags/network/" style="font-size: 10px;">network</a> <a href="/tags/okhttp/" style="font-size: 10px;">okhttp</a> <a href="/tags/open/" style="font-size: 10px;">open</a> <a href="/tags/original/" style="font-size: 10px;">original</a> <a href="/tags/plaid/" style="font-size: 10px;">plaid</a> <a href="/tags/reading/" style="font-size: 14px;">reading</a> <a href="/tags/retrofit/" style="font-size: 10px;">retrofit</a> <a href="/tags/skill/" style="font-size: 12px;">skill</a> <a href="/tags/summary/" style="font-size: 16px;">summary</a> <a href="/tags/trouble/" style="font-size: 14px;">trouble</a> <a href="/tags/userconfig/" style="font-size: 10px;">userconfig</a> <a href="/tags/utils/" style="font-size: 10px;">utils</a>
     </div>
   </div>
 
@@ -396,7 +466,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
