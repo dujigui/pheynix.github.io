@@ -124,6 +124,72 @@
 
       
       <section id="main">
+      <article id="post-015_wechat_sdk_trouble" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      
+	
+		<a href="/2016/03/02/015_wechat_sdk_trouble/" itemprop="url"><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/wechat_sdk/banner_puppy.jpg" class="article-banner"></a>
+	
+
+
+
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/02/015_wechat_sdk_trouble/">微信SDK使用过程问题</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2016/03/02/015_wechat_sdk_trouble/">
+      <time datetime="2016-03-02T04:44:10.000Z" itemprop="datePublished">2016-03-02</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>Wechat SDK 提供了授权登录/分享/支付等功能，作为国内用户量很大的一款即时通讯APP，其他的App接入Wechat的相关功能是一个很正常的需求，接入过程网上可以找到<a href="http://blog.csdn.net/qq247890212/article/details/40822481" target="_blank" rel="external">不错的教程</a>，其中的几个坑如果能够避开可以节省不少时间。</p>
+<h3 id="坑1_无法接收授权登录结果">坑1 无法接收授权登录结果</h3><p>按照<a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&amp;t=resource/res_list&amp;verify=1&amp;id=1417751808&amp;token=&amp;lang=zh_CN" target="_blank" rel="external">官方的教程</a>，无论是授权登录还是分享功能的操作结果都是通过WXEntryActivity.java这个在wxapi包下的Activity返回。</p>
+<p>在教程中有一句话：</p>
+<blockquote>
+<p>在WXEntryActivity中将接收到的intent及实现了IWXAPIEventHandler接口的对象传递给IWXAPI接口的handleIntent方法</p>
+</blockquote>
+<p>这句话中的intent不仅仅指代onNewIntent(Intent intent)回调中的intent，更重要的是，也包括初次创建此Activity时通过在onCreate()回调通过getIntent()方法拿到的intent。<br>如果发现用户确认授权之后收不到结果，检查是否在onCreate()中将intent传递给IWXAPIEventHandler了。<br>最后的代码应该类似：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class WXEntryActivity extends Activity implements IWXAPIEventHandler &#123;&#10;&#10;    @Override protected void onCreate(Bundle savedInstanceState) &#123;&#10;        super.onCreate(savedInstanceState);&#10;        setContentView(new FrameLayout(this));&#10;        App.wxAPI.handleIntent(getIntent(), this);//wxAPI&#22312;application&#30340;&#23376;&#31867;&#20013;&#21021;&#22987;&#21270;&#10;    &#125;&#10;&#10;    @Override protected void onNewIntent(Intent intent) &#123;&#10;        super.onNewIntent(intent);&#10;        App.wxAPI.handleIntent(intent, this);&#10;    &#125;&#10;&#10;    @Override public void onReq(BaseReq baseReq) &#123;&#125;&#10;&#10;    @Override public void onResp(BaseResp baseResp) &#123;&#10;        if (baseResp.errCode == BaseResp.ErrCode.ERR_OK) &#123;&#10;            if (baseResp.getType() == ConstantsAPI.COMMAND_SENDAUTH) &#123;//&#30331;&#24405;&#10;                SendAuth.Resp response = (SendAuth.Resp) baseResp;&#10;                RxBus.getBus().send(new WechatLoginEvent(response.code, 1));&#10;            &#125;&#10;        &#125;&#10;        finish();&#10;    &#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="坑2_多包名适配">坑2 多包名适配</h3><p>前面说到 Wechat SDK 返回的结果依赖于包名和类名，当业务需要根据不同的包名来区分不同的Channel时（例如me.pheynix.test.dev和me.pheynix.test区分开发版和稳定版），由于包名的改变应用签名改变自然不需要多说。真正的问题在于，包名的改变导致操作结果再次无法接收到。<br>既然返回的结果依赖于包名和类名，那么修改WXEntryActivity.java所在包即可解决问题，最后包的结构类似：</p>
+<p><pre><br>me.pheynix.test<br>├── dev<br>│   └── wxapi<br>│       └── WXEntryActivity<br>└── wxapi<br>    └── WXEntryActivity<br></pre><br>虽然可以解决问题， 这种方法更像一种Workaround而不是Solution。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://pheynix.github.io/2016/03/02/015_wechat_sdk_trouble/" data-id="cilbqhv8z0000rdgmcil9j558" class="article-share-link">Share</a>
+      
+        <a href="http://pheynix.github.io/2016/03/02/015_wechat_sdk_trouble/#ds-thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mp/">mp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/trouble/">trouble</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
       <article id="post-006_mp_index" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -199,72 +265,6 @@
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/index/">index</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mp/">mp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/summary/">summary</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-015_wechat_sdk_trouble" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      
-	
-		<a href="/2016/02/22/015_wechat_sdk_trouble/" itemprop="url"><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/wechat_sdk/banner_puppy.jpg" class="article-banner"></a>
-	
-
-
-
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/02/22/015_wechat_sdk_trouble/">微信SDK使用过程问题</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2016/02/22/015_wechat_sdk_trouble/">
-      <time datetime="2016-02-22T13:24:10.000Z" itemprop="datePublished">2016-02-22</time>
-    </a>
-  </div>
-
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p>Wechat SDK 提供了授权登录/分享/支付等功能，作为国内用户量很大的一款即时通讯APP，其他的App接入Wechat的相关功能是一个很正常的需求，接入过程网上可以找到<a href="http://blog.csdn.net/qq247890212/article/details/40822481" target="_blank" rel="external">不错的教程</a>，其中的几个坑如果能够避开可以节省不少时间。</p>
-<h3 id="坑1_无法接收授权登录结果">坑1 无法接收授权登录结果</h3><p>按照<a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&amp;t=resource/res_list&amp;verify=1&amp;id=1417751808&amp;token=&amp;lang=zh_CN" target="_blank" rel="external">官方的教程</a>，无论是授权登录还是分享功能的操作结果都是通过WXEntryActivity.java这个在wxapi包下的Activity返回。</p>
-<p>在教程中有一句话：</p>
-<blockquote>
-<p>在WXEntryActivity中将接收到的intent及实现了IWXAPIEventHandler接口的对象传递给IWXAPI接口的handleIntent方法</p>
-</blockquote>
-<p>这句话中的intent不仅仅指代onNewIntent(Intent intent)回调中的intent，更重要的是，也包括初次创建此Activity时通过在onCreate()回调通过getIntent()方法拿到的intent。<br>如果发现用户确认授权之后收不到结果，检查是否在onCreate()中将intent传递给IWXAPIEventHandler了。<br>最后的代码应该类似：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class WXEntryActivity extends Activity implements IWXAPIEventHandler &#123;&#10;&#10;    @Override protected void onCreate(Bundle savedInstanceState) &#123;&#10;        super.onCreate(savedInstanceState);&#10;        setContentView(new FrameLayout(this));&#10;        App.wxAPI.handleIntent(getIntent(), this);//wxAPI&#22312;application&#30340;&#23376;&#31867;&#20013;&#21021;&#22987;&#21270;&#10;    &#125;&#10;&#10;    @Override protected void onNewIntent(Intent intent) &#123;&#10;        super.onNewIntent(intent);&#10;        App.wxAPI.handleIntent(intent, this);&#10;    &#125;&#10;&#10;    @Override public void onReq(BaseReq baseReq) &#123;&#125;&#10;&#10;    @Override public void onResp(BaseResp baseResp) &#123;&#10;        if (baseResp.errCode == BaseResp.ErrCode.ERR_OK) &#123;&#10;            if (baseResp.getType() == ConstantsAPI.COMMAND_SENDAUTH) &#123;//&#30331;&#24405;&#10;                SendAuth.Resp response = (SendAuth.Resp) baseResp;&#10;                RxBus.getBus().send(new WechatLoginEvent(response.code, 1));&#10;            &#125;&#10;        &#125;&#10;        finish();&#10;    &#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="坑2_多包名适配">坑2 多包名适配</h3><p>前面说到 Wechat SDK 返回的结果依赖于包名和类名，当业务需要根据不同的包名来区分不同的Channel时（例如me.pheynix.test.dev和me.pheynix.test区分开发版和稳定版），由于包名的改变应用签名改变自然不需要多说。真正的问题在于，包名的改变导致操作结果再次无法接收到。<br>既然返回的结果依赖于包名和类名，那么修改WXEntryActivity.java所在包即可解决问题，最后包的结构类似：</p>
-<p><pre><br>me.pheynix.test<br>├── dev<br>│   └── wxapi<br>│       └── WXEntryActivity<br>└── wxapi<br>    └── WXEntryActivity<br></pre><br>虽然可以解决问题， 这种方法更像一种Workaround而不是Solution。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://pheynix.github.io/2016/02/22/015_wechat_sdk_trouble/" data-id="cilbqhv8z0000rdgmcil9j558" class="article-share-link">Share</a>
-      
-        <a href="http://pheynix.github.io/2016/02/22/015_wechat_sdk_trouble/#ds-thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mp/">mp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/trouble/">trouble</a></li></ul>
 
     </footer>
   </div>
@@ -623,6 +623,23 @@
           <li>
             
             <div class="item-thumbnail">
+              <a href="/2016/03/02/015_wechat_sdk_trouble/" class="thumbnail">
+  
+    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/wechat_sdk/banner_puppy.jpg)" alt="微信SDK使用过程问题" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/03/02/015_wechat_sdk_trouble/" class="title">微信SDK使用过程问题</a></p>
+              <p class="item-date"><time datetime="2016-03-02T04:44:10.000Z" itemprop="datePublished">2016-03-02</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
               <a href="/2016/02/29/006_mp_index/" class="thumbnail">
   
     <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/mp_index/banner_books.jpeg)" alt="MP实现技术总结" class="thumbnail-image"></span>
@@ -634,23 +651,6 @@
               <p class="item-category"></p>
               <p class="item-title"><a href="/2016/02/29/006_mp_index/" class="title">MP实现技术总结</a></p>
               <p class="item-date"><time datetime="2016-02-29T13:24:10.000Z" itemprop="datePublished">2016-02-29</time></p>
-            </div>
-          </li>
-        
-          <li>
-            
-            <div class="item-thumbnail">
-              <a href="/2016/02/22/015_wechat_sdk_trouble/" class="thumbnail">
-  
-    <span style="background-image:url(https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/wechat_sdk/banner_puppy.jpg)" alt="微信SDK使用过程问题" class="thumbnail-image"></span>
-  
-</a>
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category"></p>
-              <p class="item-title"><a href="/2016/02/22/015_wechat_sdk_trouble/" class="title">微信SDK使用过程问题</a></p>
-              <p class="item-date"><time datetime="2016-02-22T13:24:10.000Z" itemprop="datePublished">2016-02-22</time></p>
             </div>
           </li>
         
@@ -734,7 +734,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
