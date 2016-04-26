@@ -97,7 +97,7 @@
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
-        15
+        14
         <span>posts</span>
       </div>
       <div class="article-info-block">
@@ -124,6 +124,73 @@
 
       
       <section id="main">
+      <article id="post-008_basic_okhttp_usage" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      
+	
+		<a href="/2016/01/20/008_basic_okhttp_usage/" itemprop="url"><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/basic_okhttp/banner_night.jpeg" class="article-banner"></a>
+	
+
+
+
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/20/008_basic_okhttp_usage/">OkHttp基本用法</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2016/01/20/008_basic_okhttp_usage/">
+      <time datetime="2016-01-20T13:24:10.000Z" itemprop="datePublished">2016-01-20</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>OkHttp是一个用于Andriod和Java的HTTP请求框架，可以很方便的发起请求和处理返回的数据。</p>
+<h2 id="用法">用法</h2><h5 id="建立单例">建立单例</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class OkFactory &#123;&#10;    private static OkHttpClient client = new OkHttpClient();&#10;&#10;    public static OkHttpClient getInstance() &#123;&#10;        return client;&#10;    &#125;&#10;&#10;    private OkFactory() &#123;&#10;        throw new UnsupportedOperationException();&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="发送GET请求">发送GET请求</h5><p>先生成Request对象，然后通过OkHttpClient发送，通过<code>enqueue</code>设置结果回调。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Request request = new Request.Builder().url(url).build();&#10;OkFactory.getInstance().newCall(request).enqueue(new Callback() &#123;&#10;    @Override public void onFailure(Request request, IOException e) &#123;&#10;        //handle exception here&#10;    &#125;&#10;&#10;    @Override public void onResponse(final Response response) throws IOException &#123;&#10;       String body = response.body().string();&#10;    &#125;&#10;&#125;);</span><br></pre></td></tr></table></figure>
+<h5 id="发送POST请求">发送POST请求</h5><p>同样，先生成Request，POST请求需要配置MediaType和RequestBody，剩下的GET请求相同。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MediaType mediaTypeJson = MediaType.parse(&#34;application/json; charset=utf-8&#34;);&#10;RequestBody requestBody = RequestBody.create(mediaTypeJson, body);&#10;Request request = new Request.Builder().url(url).post(requestBody).build();&#10;&#10;&#10;OkFactory.getInstance().newCall(request).enqueue(new Callback() &#123;&#10;    @Override public void onFailure(Request request, IOException e) &#123;&#10;        //handle exception here&#10;    &#125;&#10;&#10;    @Override public void onResponse(Response response) throws IOException &#123;&#10;        String result = response.body().string();&#10;    &#125;&#10;&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="更多">更多</h2><p>PATCH请求和DELETE请求和上述步骤大同小异。<br>很多时候请求需要在Header中加入token做用户身份认证，只需要在Reques对象的builder中设置即可。</p>
+<ul>
+<li><a href="https://github.com/square/okhttp/wiki" target="_blank" rel="external">wiki</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://pheynix.github.io/2016/01/20/008_basic_okhttp_usage/" data-id="cil576lb90011pfgmw5bmm0xb" class="article-share-link">Share</a>
+      
+        <a href="http://pheynix.github.io/2016/01/20/008_basic_okhttp_usage/#ds-thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mp/">mp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/network/">network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/okhttp/">okhttp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/summary/">summary</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
       <article id="post-009_basic_retrofit_usage" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -184,73 +251,6 @@
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mp/">mp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/retrofit/">retrofit</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/summary/">summary</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-008_basic_okhttp_usage" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      
-	
-		<a href="/2016/01/20/008_basic_okhttp_usage/" itemprop="url"><img src="https://github.com/pheynix/pheynix.github.io/raw/master/css/images/asset/basic_okhttp/banner_night.jpeg" class="article-banner"></a>
-	
-
-
-
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/20/008_basic_okhttp_usage/">OkHttp基本用法</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2016/01/20/008_basic_okhttp_usage/">
-      <time datetime="2016-01-20T13:24:10.000Z" itemprop="datePublished">2016-01-20</time>
-    </a>
-  </div>
-
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p>OkHttp是一个用于Andriod和Java的HTTP请求框架，可以很方便的发起请求和处理返回的数据。</p>
-<h2 id="用法">用法</h2><h5 id="建立单例">建立单例</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class OkFactory &#123;&#10;    private static OkHttpClient client = new OkHttpClient();&#10;&#10;    public static OkHttpClient getInstance() &#123;&#10;        return client;&#10;    &#125;&#10;&#10;    private OkFactory() &#123;&#10;        throw new UnsupportedOperationException();&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="发送GET请求">发送GET请求</h5><p>先生成Request对象，然后通过OkHttpClient发送，通过<code>enqueue</code>设置结果回调。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Request request = new Request.Builder().url(url).build();&#10;OkFactory.getInstance().newCall(request).enqueue(new Callback() &#123;&#10;    @Override public void onFailure(Request request, IOException e) &#123;&#10;        //handle exception here&#10;    &#125;&#10;&#10;    @Override public void onResponse(final Response response) throws IOException &#123;&#10;       String body = response.body().string();&#10;    &#125;&#10;&#125;);</span><br></pre></td></tr></table></figure>
-<h5 id="发送POST请求">发送POST请求</h5><p>同样，先生成Request，POST请求需要配置MediaType和RequestBody，剩下的GET请求相同。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MediaType mediaTypeJson = MediaType.parse(&#34;application/json; charset=utf-8&#34;);&#10;RequestBody requestBody = RequestBody.create(mediaTypeJson, body);&#10;Request request = new Request.Builder().url(url).post(requestBody).build();&#10;&#10;&#10;OkFactory.getInstance().newCall(request).enqueue(new Callback() &#123;&#10;    @Override public void onFailure(Request request, IOException e) &#123;&#10;        //handle exception here&#10;    &#125;&#10;&#10;    @Override public void onResponse(Response response) throws IOException &#123;&#10;        String result = response.body().string();&#10;    &#125;&#10;&#125;);</span><br></pre></td></tr></table></figure>
-<h2 id="更多">更多</h2><p>PATCH请求和DELETE请求和上述步骤大同小异。<br>很多时候请求需要在Header中加入token做用户身份认证，只需要在Reques对象的builder中设置即可。</p>
-<ul>
-<li><a href="https://github.com/square/okhttp/wiki" target="_blank" rel="external">wiki</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://pheynix.github.io/2016/01/20/008_basic_okhttp_usage/" data-id="cil576lb90011pfgmw5bmm0xb" class="article-share-link">Share</a>
-      
-        <a href="http://pheynix.github.io/2016/01/20/008_basic_okhttp_usage/#ds-thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mp/">mp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/network/">network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/okhttp/">okhttp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/summary/">summary</a></li></ul>
 
     </footer>
   </div>
@@ -711,7 +711,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Exception/">Exception</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JUnit/">JUnit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RxJava/">RxJava</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/animation/">animation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/application/">application</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/comment/">comment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/footprint/">footprint</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/index/">index</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/learning/">learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mp/">mp</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/okhttp/">okhttp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/open/">open</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/original/">original</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/plaid/">plaid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reading/">reading</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/retrofit/">retrofit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skill/">skill</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/summary/">summary</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/trouble/">trouble</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/userconfig/">userconfig</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/utils/">utils</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Exception/">Exception</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JUnit/">JUnit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RxJava/">RxJava</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/animation/">animation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/application/">application</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/comment/">comment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/index/">index</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/learning/">learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mp/">mp</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/okhttp/">okhttp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/open/">open</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/original/">original</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/plaid/">plaid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reading/">reading</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/retrofit/">retrofit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/skill/">skill</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/summary/">summary</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/trouble/">trouble</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/userconfig/">userconfig</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/utils/">utils</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -720,7 +720,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">tag cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Exception/" style="font-size: 10px;">Exception</a> <a href="/tags/JUnit/" style="font-size: 10px;">JUnit</a> <a href="/tags/RxJava/" style="font-size: 10px;">RxJava</a> <a href="/tags/android/" style="font-size: 20px;">android</a> <a href="/tags/animation/" style="font-size: 10px;">animation</a> <a href="/tags/application/" style="font-size: 10px;">application</a> <a href="/tags/comment/" style="font-size: 10px;">comment</a> <a href="/tags/footprint/" style="font-size: 10px;">footprint</a> <a href="/tags/index/" style="font-size: 10px;">index</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/learning/" style="font-size: 10px;">learning</a> <a href="/tags/mp/" style="font-size: 18px;">mp</a> <a href="/tags/network/" style="font-size: 10px;">network</a> <a href="/tags/okhttp/" style="font-size: 10px;">okhttp</a> <a href="/tags/open/" style="font-size: 10px;">open</a> <a href="/tags/original/" style="font-size: 10px;">original</a> <a href="/tags/plaid/" style="font-size: 10px;">plaid</a> <a href="/tags/reading/" style="font-size: 14px;">reading</a> <a href="/tags/retrofit/" style="font-size: 10px;">retrofit</a> <a href="/tags/skill/" style="font-size: 12px;">skill</a> <a href="/tags/summary/" style="font-size: 16px;">summary</a> <a href="/tags/trouble/" style="font-size: 14px;">trouble</a> <a href="/tags/userconfig/" style="font-size: 10px;">userconfig</a> <a href="/tags/utils/" style="font-size: 10px;">utils</a>
+      <a href="/tags/Exception/" style="font-size: 10px;">Exception</a> <a href="/tags/JUnit/" style="font-size: 10px;">JUnit</a> <a href="/tags/RxJava/" style="font-size: 10px;">RxJava</a> <a href="/tags/android/" style="font-size: 20px;">android</a> <a href="/tags/animation/" style="font-size: 10px;">animation</a> <a href="/tags/application/" style="font-size: 10px;">application</a> <a href="/tags/comment/" style="font-size: 10px;">comment</a> <a href="/tags/index/" style="font-size: 10px;">index</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/learning/" style="font-size: 10px;">learning</a> <a href="/tags/mp/" style="font-size: 18px;">mp</a> <a href="/tags/network/" style="font-size: 10px;">network</a> <a href="/tags/okhttp/" style="font-size: 10px;">okhttp</a> <a href="/tags/open/" style="font-size: 10px;">open</a> <a href="/tags/original/" style="font-size: 10px;">original</a> <a href="/tags/plaid/" style="font-size: 10px;">plaid</a> <a href="/tags/reading/" style="font-size: 14px;">reading</a> <a href="/tags/retrofit/" style="font-size: 10px;">retrofit</a> <a href="/tags/skill/" style="font-size: 12px;">skill</a> <a href="/tags/summary/" style="font-size: 16px;">summary</a> <a href="/tags/trouble/" style="font-size: 14px;">trouble</a> <a href="/tags/userconfig/" style="font-size: 10px;">userconfig</a> <a href="/tags/utils/" style="font-size: 10px;">utils</a>
     </div>
   </div>
 
@@ -729,7 +729,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
